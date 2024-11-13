@@ -9,12 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 /**
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class SplashFragment extends Fragment {
+public class LoginFragment extends Fragment {
+
+    EditText emailEditText;
+    EditText passwordEditText;
+    Button loginButton;
+    Button joinButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,13 +31,16 @@ public class SplashFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_splash, container, false);
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        emailEditText = view.findViewById(R.id.emailEditText);
+        passwordEditText = view.findViewById(R.id.passwordEditText);
+        loginButton = view.findViewById(R.id.loginButton);
+        joinButton = view.findViewById(R.id.joinButton);
 
-        Button getStartedButton = view.findViewById(R.id.getStartedButton);
-        getStartedButton.setOnClickListener(new View.OnClickListener() {
+        joinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.navigateToLogin);
+                Navigation.findNavController(view).navigate(R.id.navigateToJoin);
             }
         });
 
