@@ -3,6 +3,8 @@ package com.example.quickcart;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +22,6 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ProductsListFragment extends Fragment {
-
     ImageButton cartButton;
     RecyclerView productsRecyclerView;
     RecyclerView.Adapter productsAdapter;
@@ -44,6 +45,13 @@ public class ProductsListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_products_list, container, false);
         cartButton = view.findViewById(R.id.cartButton);
+        cartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.navigateToCart);
+            }
+        });
+
         productsRecyclerView = view.findViewById(R.id.productsRecyclerView);
 
         layoutManager = new GridLayoutManager(getContext(), 2);
@@ -55,7 +63,13 @@ public class ProductsListFragment extends Fragment {
         });
 
         productsRecyclerView.setLayoutManager(layoutManager);
-        productsAdapter = new ProductsAdapter(products);
+        productsAdapter = new ProductsAdapter(products, product -> {
+            NavController navController = Navigation.findNavController(view);
+            Bundle bundle = new Bundle();
+            bundle.putString("product", product);
+            navController.navigate(R.id.navigateToProductDetail, bundle);
+        });
+
         productsRecyclerView.setAdapter(productsAdapter);
         return view;
     }

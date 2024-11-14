@@ -15,9 +15,11 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int TYPE_GRID_ITEM = 1;
 
     private List<String> products;
+    private OnProductClickListener clickListener;
 
-    public ProductsAdapter(List<String> products) {
+    public ProductsAdapter(List<String> products, OnProductClickListener clickListener) {
         this.products = products;
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -45,7 +47,13 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         } else {
             ProductCardHolder productsCardHolder = (ProductCardHolder) holder;
             String product = products.get(position - 1);
-
+            productsCardHolder.bind(product);
+            productsCardHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clickListener.onProductClick(product);
+                }
+            });
             // Customize product card
         }
     }
@@ -63,8 +71,18 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     static class ProductCardHolder extends RecyclerView.ViewHolder {
+        // Declare all items in field
         public ProductCardHolder(@NonNull View itemView) {
             super(itemView);
+            // initialize all items in field
         }
+
+        public void bind(String product) {
+            // Set prduct detail to the card cell
+        }
+    }
+
+    public interface OnProductClickListener {
+        void onProductClick(String product);
     }
 }
