@@ -23,7 +23,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="15dp">
+                app:cardCornerRadius="12dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:backgroundTint="@color/brandMain"
-                android:text="+ Add"
+                android:text="+ Add to Cart"
                 app:cornerRadius="12dp" />
 
             <LinearLayout
@@ -90,7 +90,9 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/brandMain"
                     android:fontFamily="sans-serif"
-                    android:text="-" />
+                    android:text="-"
+                    android:textSize="20sp"
+                    app:cornerRadius="12dp" />
 
                 <TextView
                     android:id="@+id/countTextView"
@@ -106,7 +108,9 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/brandMain"
-                    android:text="+" />
+                    android:text="+"
+                    android:textSize="16sp"
+                    app:cornerRadius="12dp" />
             </LinearLayout>
         </LinearLayout>
 

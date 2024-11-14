@@ -23,7 +23,7 @@
             android:layout_height="200dp"
             android:backgroundTint="#004F53E5"
             android:scaleType="centerCrop"
-            android:src="@drawable/banner"
-            tools:srcCompat="@drawable/banner" />
+            android:src="@drawable/landscape_banner"
+            tools:srcCompat="@drawable/landscape_banner" />
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
