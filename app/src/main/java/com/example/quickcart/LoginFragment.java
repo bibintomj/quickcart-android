@@ -16,7 +16,6 @@ import android.widget.EditText;
  * create an instance of this fragment.
  */
 public class LoginFragment extends Fragment {
-
     EditText emailEditText;
     EditText passwordEditText;
     Button loginButton;

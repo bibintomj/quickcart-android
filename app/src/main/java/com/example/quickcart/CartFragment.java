@@ -1,64 +1,129 @@
 package com.example.quickcart;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CartFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class CartFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    ImageButton backButton;
+    TextView titleTextView;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    LinearLayout noContentLinearLayout;
+    Button noContentContinueShoppingButton;
 
-    public CartFragment() {
-        // Required empty public constructor
+    LinearLayout ctaLinearLayout;
+    Button continueShoppingButton;
+    Button checkoutButton;
+
+    RecyclerView cartRecyclerView;
+    RecyclerView.Adapter cartAdapter;
+    GridLayoutManager layoutManager;
+    List<String> products = new ArrayList<>();
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Update the span count based on orientation
+        int spanCount = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE ? 2 : 1;
+        GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), spanCount);
+        cartRecyclerView.setLayoutManager(layoutManager);
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CartFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CartFragment newInstance(String param1, String param2) {
-        CartFragment fragment = new CartFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        products.add("Bill Gates");
+        products.add("Steve Jobs");
+        products.add("Tim Cook");
+        products.add("Elon Musk");
+        products.add("Jeff Bezos");
+        products.add("Mark Zuckerburg");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false);
+        View view = inflater.inflate(R.layout.fragment_cart, container, false);
+        backButton = view.findViewById(R.id.backButton);
+        continueShoppingButton = view.findViewById(R.id.continueShoppingButton);
+        titleTextView = view.findViewById(R.id.titleTextView);
+        checkoutButton = view.findViewById(R.id.checkoutButton);
+        ctaLinearLayout = view.findViewById(R.id.ctaLinearLayout);
+        noContentContinueShoppingButton = view.findViewById(R.id.noContentContinueShoppingButton);
+        noContentLinearLayout = view.findViewById(R.id.noContentLinearLayout);
+        cartRecyclerView = view.findViewById(R.id.cartRecyclerView);
+        setupListenersOnView(view);
+
+        int orientation = getResources().getConfiguration().orientation;
+        layoutManager = new GridLayoutManager(requireContext(), orientation == Configuration.ORIENTATION_LANDSCAPE ? 2 : 1);
+        cartRecyclerView.setLayoutManager(layoutManager);
+        cartAdapter = new CartAdapter(products, product -> {
+            NavController navController = Navigation.findNavController(view);
+            Bundle bundle = new Bundle();
+            bundle.putString("product", product);
+            navController.navigate(R.id.navigateToProductDetail, bundle);
+        });
+
+        cartRecyclerView.setAdapter(cartAdapter);
+        Boolean hasProducts = (products != null && !products.isEmpty());
+        ctaLinearLayout.setVisibility(hasProducts ? View.VISIBLE : View.INVISIBLE);
+        noContentLinearLayout.setVisibility(hasProducts ? View.INVISIBLE : View.VISIBLE);
+
+        return view;
+    }
+
+    private void setupListenersOnView(View view) {
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View button) {
+                Navigation.findNavController(view).popBackStack();
+            }
+        });
+
+        checkoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View button) {
+                Navigation.findNavController(view).navigate(R.id.navigateToCheckout);
+            }
+        });
+
+        continueShoppingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View button) {
+                Navigation.findNavController(view).popBackStack(R.id.productsListFragment, false);
+            }
+        });
+
+        noContentContinueShoppingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View button) {
+                Navigation.findNavController(view).popBackStack(R.id.productsListFragment, false);
+            }
+        });
     }
 }
