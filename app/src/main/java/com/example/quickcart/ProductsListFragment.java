@@ -22,11 +22,11 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ProductsListFragment extends Fragment {
-    ImageButton cartButton;
-    RecyclerView productsRecyclerView;
-    RecyclerView.Adapter productsAdapter;
-    GridLayoutManager layoutManager;
-    List<String> products = new ArrayList<>();
+    private ImageButton cartButton;
+    private RecyclerView productsRecyclerView;
+    private RecyclerView.Adapter productsAdapter;
+    private GridLayoutManager layoutManager;
+    private List<String> products = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

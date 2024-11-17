@@ -14,8 +14,8 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int TYPE_BANNER = 0;
     private static final int TYPE_GRID_ITEM = 1;
 
-    private List<String> products;
-    private OnProductClickListener clickListener;
+    private final List<String> products;
+    private final OnProductClickListener clickListener;
 
     public ProductsAdapter(List<String> products, OnProductClickListener clickListener) {
         this.products = products;

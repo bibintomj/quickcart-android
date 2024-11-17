@@ -113,16 +113,28 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
+                    <EditText
+                        android:id="@+id/phoneEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_edittext"
+                        android:ems="10"
+                        android:hint="Phone (XXX) XXX-XXXX"
+                        android:inputType="phone"
+                        android:paddingStart="20dp" />
+
                     <CheckBox
                         android:id="@+id/termsCheckBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:buttonTint="@color/brandMain"
                         android:text="I agree to QuickCart's Terms and Policies"
@@ -135,7 +147,7 @@
                     android:id="@+id/joinButton"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="16dp"
                     android:backgroundTint="@color/brandMain"
                     android:text="Join Now"
                     android:textColorLink="#4f53e5"
@@ -166,6 +178,7 @@
                     android:layout_weight="1"
                     android:backgroundTint="#004F53E5"
                     android:text="Login"
+                    android:textAlignment="viewStart"
                     android:textColor="@color/brandMain"
                     android:textColorLink="@color/brandMain"
                     app:cornerRadius="12dp" />

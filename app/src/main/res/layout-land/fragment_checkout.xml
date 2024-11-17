@@ -49,11 +49,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
@@ -75,7 +76,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginHorizontal="12dp"
+                            android:layout_marginHorizontal="16dp"
                             android:layout_marginVertical="16dp"
                             android:orientation="vertical">
 
@@ -163,8 +164,9 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
@@ -186,7 +188,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginHorizontal="12dp"
+                            android:layout_marginHorizontal="16dp"
                             android:layout_marginVertical="16dp"
                             android:orientation="vertical">
 
@@ -208,7 +210,7 @@
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/rounded_edittext"
                                 android:ems="10"
-                                android:hint="Card Number XXXX-XXXX-XXXX-XXXX"
+                                android:hint="Card Number"
                                 android:inputType="number"
                                 android:maxLength="16"
                                 android:paddingHorizontal="20dp" />
@@ -231,20 +233,20 @@
                                     android:maxLength="5"
                                     android:paddingHorizontal="20dp" />
 
-                                <EditText
-                                    android:id="@+id/cvvEditText"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="50dp"
-                                    android:layout_marginLeft="8dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/rounded_edittext"
-                                    android:ems="10"
-                                    android:hint="CVV"
-                                    android:inputType="number"
-                                    android:maxLength="3"
-                                    android:paddingHorizontal="20dp" />
-
                             </LinearLayout>
+
+                            <EditText
+                                android:id="@+id/cvvEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/rounded_edittext"
+                                android:ems="10"
+                                android:hint="CVV"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:paddingHorizontal="20dp" />
 
                         </LinearLayout>
 

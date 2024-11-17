@@ -28,20 +28,20 @@ import java.util.List;
  */
 public class CartFragment extends Fragment {
 
-    ImageButton backButton;
-    TextView titleTextView;
+    private ImageButton backButton;
+    private TextView titleTextView;
 
-    LinearLayout noContentLinearLayout;
-    Button noContentContinueShoppingButton;
+    private LinearLayout noContentLinearLayout;
+    private Button noContentContinueShoppingButton;
 
-    LinearLayout ctaLinearLayout;
-    Button continueShoppingButton;
-    Button checkoutButton;
+    private LinearLayout ctaLinearLayout;
+    private Button continueShoppingButton;
+    private Button checkoutButton;
 
-    RecyclerView cartRecyclerView;
-    RecyclerView.Adapter cartAdapter;
-    GridLayoutManager layoutManager;
-    List<String> products = new ArrayList<>();
+    private RecyclerView cartRecyclerView;
+    private RecyclerView.Adapter cartAdapter;
+    private GridLayoutManager layoutManager;
+    private List<String> products = new ArrayList<>();
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -81,6 +81,13 @@ public class CartFragment extends Fragment {
 
         int orientation = getResources().getConfiguration().orientation;
         layoutManager = new GridLayoutManager(requireContext(), orientation == Configuration.ORIENTATION_LANDSCAPE ? 2 : 1);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                int span = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 2 : 1;
+                return position == products.size() ? span : 1;
+            }
+        });
         cartRecyclerView.setLayoutManager(layoutManager);
         cartAdapter = new CartAdapter(products, product -> {
             NavController navController = Navigation.findNavController(view);

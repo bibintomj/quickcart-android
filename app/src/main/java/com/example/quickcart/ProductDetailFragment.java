@@ -28,25 +28,25 @@ import androidx.appcompat.widget.Toolbar;
  */
 public class ProductDetailFragment extends Fragment {
 
-    ImageButton backButton;
-    TextView titleTextView;
-    ImageButton cartButton;
+    private ImageButton backButton;
+    private TextView titleTextView;
+    private ImageButton cartButton;
 
-    ImageView bannerImageView;
-    TextView priceTextView;
-    TextView productNameTextView;
-    TextView soldByTextView;
+    private ImageView bannerImageView;
+    private TextView priceTextView;
+    private TextView productNameTextView;
+    private TextView soldByTextView;
 
-    View starBar;
+    private View starBar;
 
-    TextView returnTextView;
-    TextView productDescription;
+    private TextView returnTextView;
+    private TextView productDescription;
 
-    Button decreaseCountButton;
-    TextView countTextView;
-    Button increaseCountButton;
+    private Button decreaseCountButton;
+    private TextView countTextView;
+    private Button increaseCountButton;
 
-    Button addButton;
+    private Button addButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

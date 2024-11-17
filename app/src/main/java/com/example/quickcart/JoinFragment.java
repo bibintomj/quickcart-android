@@ -18,13 +18,13 @@ import android.widget.EditText;
  */
 public class JoinFragment extends Fragment {
 
-    EditText nameEditText;
-    EditText emailEditText;
-    EditText passwordEditText;
-    EditText confirmPasswordEditText;
-    CheckBox termsCheckBox;
-    Button joinButton;
-    Button loginButton;
+    private EditText nameEditText;
+    private EditText emailEditText;
+    private EditText passwordEditText;
+    private EditText confirmPasswordEditText;
+    private CheckBox termsCheckBox;
+    private Button joinButton;
+    private Button loginButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class JoinFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.navigateToLogin);
+                Navigation.findNavController(view).popBackStack();
             }
         });
 

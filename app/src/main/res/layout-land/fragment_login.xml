@@ -97,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="390dp"
+            android:layout_marginEnd="30dp"
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
@@ -118,6 +118,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="#004F53E5"
                 android:text="Join Now"
+                android:textAlignment="viewStart"
                 android:textColor="@color/brandMain"
                 android:textColorLink="@color/brandMain"
                 app:cornerRadius="12dp" />

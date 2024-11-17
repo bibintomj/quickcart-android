@@ -95,9 +95,11 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/brandMain"
+                        android:backgroundTint="@color/secondaryBackground"
                         android:text="-"
-                        android:textSize="16sp" />
+                        android:textColor="@color/brandMain"
+                        android:textSize="16sp"
+                        app:cornerRadius="12dp" />
 
                     <TextView
                         android:id="@+id/countTextView"
@@ -112,9 +114,11 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/brandMain"
+                        android:backgroundTint="@color/secondaryBackground"
                         android:text="+"
-                        android:textSize="16sp" />
+                        android:textColor="@color/brandMain"
+                        android:textSize="16sp"
+                        app:cornerRadius="12dp" />
                 </LinearLayout>
             </LinearLayout>
 

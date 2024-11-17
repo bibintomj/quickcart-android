@@ -83,9 +83,10 @@
                         android:layout_width="60dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/brandMain"
+                        android:backgroundTint="@color/secondaryBackground"
                         android:fontFamily="sans-serif"
                         android:text="-"
+                        android:textColor="@color/brandMain"
                         android:textSize="20sp"
                         app:cornerRadius="12dp" />
 
@@ -103,8 +104,9 @@
                         android:layout_width="60dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/brandMain"
+                        android:backgroundTint="@color/secondaryBackground"
                         android:text="+"
+                        android:textColor="@color/brandMain"
                         android:textSize="16sp"
                         app:cornerRadius="12dp" />
                 </LinearLayout>

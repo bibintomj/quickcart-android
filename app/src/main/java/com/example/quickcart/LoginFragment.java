@@ -16,10 +16,10 @@ import android.widget.EditText;
  * create an instance of this fragment.
  */
 public class LoginFragment extends Fragment {
-    EditText emailEditText;
-    EditText passwordEditText;
-    Button loginButton;
-    Button joinButton;
+    private EditText emailEditText;
+    private EditText passwordEditText;
+    private Button loginButton;
+    private Button joinButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

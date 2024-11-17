@@ -51,6 +51,7 @@
                     android:ems="10"
                     android:hint="Full Name"
                     android:inputType="text|textEmailAddress"
+                    android:maxLength="50"
                     android:paddingStart="20dp" />
 
                 <EditText
@@ -62,6 +63,19 @@
                     android:ems="10"
                     android:hint="example@email.com"
                     android:inputType="text|textEmailAddress"
+                    android:maxLength="50"
+                    android:paddingStart="20dp" />
+
+                <EditText
+                    android:id="@+id/phoneEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:ems="10"
+                    android:hint="Phone (XXX) XXX-XXXX"
+                    android:inputType="phone"
+                    android:maxLength="10"
                     android:paddingStart="20dp" />
 
                 <EditText
@@ -73,6 +87,7 @@
                     android:ems="10"
                     android:hint="Password"
                     android:inputType="text|textPassword"
+                    android:maxLength="50"
                     android:paddingStart="20dp" />
 
                 <EditText
@@ -84,6 +99,7 @@
                     android:ems="10"
                     android:hint="Confirm Password"
                     android:inputType="text|textPassword"
+                    android:maxLength="50"
                     android:paddingStart="20dp" />
 
                 <LinearLayout
@@ -141,6 +157,7 @@
                     android:layout_weight="1"
                     android:backgroundTint="#004F53E5"
                     android:text="Login"
+                    android:textAlignment="viewStart"
                     android:textColor="@color/brandMain"
                     android:textColorLink="@color/brandMain"
                     app:cornerRadius="12dp" />

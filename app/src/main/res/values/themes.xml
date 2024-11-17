@@ -5,6 +5,9 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
 <!--        <item name="android:windowBackground">@drawable/launch_screen</item>-->
     </style>
+    <style name="CustomSpinnerStyle" parent="Widget.AppCompat.Spinner.DropDown">
+        <item name="android:popupBackground">@drawable/spinner_dropdown_background</item>
+    </style>
 
     <style name="Theme.Quickcart" parent="Base.Theme.Quickcart" />
 </resources>

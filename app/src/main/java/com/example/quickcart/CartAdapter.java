@@ -14,8 +14,8 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_SUBTOTAL = 0;
     private static final int TYPE_ROW_ITEM = 1;
 
-    private List<String> products;
-    private OnProductClickListener clickListener;
+    private final List<String> products;
+    private final OnProductClickListener clickListener;
 
     @Override
     public int getItemViewType(int position) {
