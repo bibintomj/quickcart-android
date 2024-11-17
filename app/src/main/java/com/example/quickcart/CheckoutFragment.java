@@ -36,6 +36,7 @@ public class CheckoutFragment extends Fragment {
     private EditText expiryEditText;
     private EditText cvvEditText;
 
+    private TextView totalAmountTextView;
     private Button placeOrderButton;
 
     @Override
@@ -64,7 +65,9 @@ public class CheckoutFragment extends Fragment {
         expiryEditText = view.findViewById(R.id.expiryEditText);
         cvvEditText = view.findViewById(R.id.cvvEditText);
 
+        totalAmountTextView = view.findViewById(R.id.totalAmountTextView);
         placeOrderButton = view.findViewById(R.id.placeOrderButton);
+        setupListenersOnView(view);
         return view;
     }
 

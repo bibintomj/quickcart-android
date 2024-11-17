@@ -34,7 +34,8 @@ public class CartFragment extends Fragment {
     private LinearLayout noContentLinearLayout;
     private Button noContentContinueShoppingButton;
 
-    private LinearLayout ctaLinearLayout;
+    private LinearLayout ctaContainerLinearLayout;
+    private TextView totalAmountTextView;
     private Button continueShoppingButton;
     private Button checkoutButton;
 
@@ -72,10 +73,13 @@ public class CartFragment extends Fragment {
         backButton = view.findViewById(R.id.backButton);
         continueShoppingButton = view.findViewById(R.id.continueShoppingButton);
         titleTextView = view.findViewById(R.id.titleTextView);
+
+        ctaContainerLinearLayout = view.findViewById(R.id.ctaContainerLinearLayout);
+        totalAmountTextView = view.findViewById(R.id.totalAmountTextView);
         checkoutButton = view.findViewById(R.id.checkoutButton);
-        ctaLinearLayout = view.findViewById(R.id.ctaLinearLayout);
         noContentContinueShoppingButton = view.findViewById(R.id.noContentContinueShoppingButton);
         noContentLinearLayout = view.findViewById(R.id.noContentLinearLayout);
+
         cartRecyclerView = view.findViewById(R.id.cartRecyclerView);
         setupListenersOnView(view);
 
@@ -98,7 +102,7 @@ public class CartFragment extends Fragment {
 
         cartRecyclerView.setAdapter(cartAdapter);
         Boolean hasProducts = (products != null && !products.isEmpty());
-        ctaLinearLayout.setVisibility(hasProducts ? View.VISIBLE : View.INVISIBLE);
+        ctaContainerLinearLayout.setVisibility(hasProducts ? View.VISIBLE : View.INVISIBLE);
         noContentLinearLayout.setVisibility(hasProducts ? View.INVISIBLE : View.VISIBLE);
 
         return view;
