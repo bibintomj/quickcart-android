@@ -15,8 +15,8 @@
             android:id="@+id/imageView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@drawable/order_success_portrait"
+            android:scaleType="fitCenter"
+            android:src="@drawable/order_success_landscape"
             android:layout_gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,8 +26,9 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="30dp"
             android:gravity="center"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,36 +36,41 @@
 
             <ImageView
                 android:id="@+id/checkmarkImageView"
-                android:visibility="invisible"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="invisible"
                 android:src="@drawable/checkmark" />
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="Order Placed"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="24sp" />
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Order Placed"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+                <Button
+                    android:id="@+id/goHomeButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="Go Home"
+                    android:textColor="@color/brandMain"
+                    app:cornerRadius="12dp" />
+            </LinearLayout>
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/goHomeButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="100dp"
-            android:layout_marginBottom="90dp"
-            android:backgroundTint="@color/white"
-            android:text="Go Home"
-            android:textColor="@color/brandMain"
-            app:cornerRadius="12dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
