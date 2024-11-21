@@ -91,6 +91,18 @@
                                 android:paddingHorizontal="20dp" />
 
                             <EditText
+                                android:id="@+id/phoneEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/rounded_edittext"
+                                android:ems="10"
+                                android:hint="Mobile Number"
+                                android:inputType="phone"
+                                android:maxLength="10"
+                                android:paddingHorizontal="20dp" />
+
+                            <EditText
                                 android:id="@+id/houseNumberEditText"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"

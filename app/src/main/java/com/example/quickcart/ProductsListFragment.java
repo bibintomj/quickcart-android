@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +73,20 @@ public class ProductsListFragment extends Fragment {
         });
 
         productsRecyclerView.setAdapter(productsAdapter);
+
+        initializeTabBar(view);
         return view;
+    }
+
+    private void initializeTabBar(View view) {
+        LinearLayout tabItem1 = view.findViewById(R.id.tab_item_1);
+        LinearLayout tabItem2 = view.findViewById(R.id.tab_item_2);
+
+        tabItem1.setSelected(true);
+
+        // Tab item 2 (Profile)
+        tabItem2.setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate(R.id.navigateToMore);
+        });
     }
 }

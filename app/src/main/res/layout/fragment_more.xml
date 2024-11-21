@@ -20,21 +20,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/cartButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        android:layout_weight="1"
-        android:backgroundTint="#00FFFFFF"
-        android:contentDescription="Cart Button"
-        android:scaleType="centerInside"
-        android:src="@drawable/cart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
@@ -42,15 +29,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/productsRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:paddingHorizontal="12dp" />
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"/>
 
     <include
         android:id="@+id/custom_tab_bar"
@@ -58,7 +37,9 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/coordinatorLayout"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

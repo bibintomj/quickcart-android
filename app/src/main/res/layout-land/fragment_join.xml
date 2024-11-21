@@ -65,7 +65,7 @@
                         android:ems="10"
                         android:hint="Full Name"
                         android:inputType="text|textEmailAddress"
-                        android:paddingStart="20dp" />
+                        android:paddingHorizontal="20dp" />
 
                     <EditText
                         android:id="@+id/emailEditText"
@@ -77,7 +77,7 @@
                         android:ems="10"
                         android:hint="example@email.com"
                         android:inputType="text|textEmailAddress"
-                        android:paddingStart="20dp" />
+                        android:paddingHorizontal="20dp" />
 
                 </LinearLayout>
 
@@ -96,7 +96,7 @@
                         android:ems="10"
                         android:hint="Password"
                         android:inputType="text|textPassword"
-                        android:paddingStart="20dp" />
+                        android:paddingHorizontal="20dp" />
 
                     <EditText
                         android:id="@+id/confirmPasswordEditText"
@@ -108,7 +108,7 @@
                         android:ems="10"
                         android:hint="Confirm Password"
                         android:inputType="text|textPassword"
-                        android:paddingStart="20dp" />
+                        android:paddingHorizontal="20dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -118,17 +118,6 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/phoneEditText"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/rounded_edittext"
-                        android:ems="10"
-                        android:hint="Phone (XXX) XXX-XXXX"
-                        android:inputType="phone"
-                        android:paddingStart="20dp" />
 
                     <CheckBox
                         android:id="@+id/termsCheckBox"

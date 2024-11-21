@@ -65,7 +65,7 @@
                     android:ems="10"
                     android:hint="example@email.com"
                     android:inputType="text|textEmailAddress"
-                    android:paddingStart="20dp" />
+                    android:paddingHorizontal="20dp" />
 
                 <EditText
                     android:id="@+id/passwordEditText"
@@ -76,7 +76,7 @@
                     android:ems="10"
                     android:hint="Password"
                     android:inputType="text|textPassword"
-                    android:paddingStart="20dp" />
+                    android:paddingHorizontal="20dp" />
 
                 <Button
                     android:id="@+id/loginButton"

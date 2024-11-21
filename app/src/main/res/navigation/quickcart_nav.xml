@@ -66,6 +66,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/navigateToMore"
+            app:destination="@id/moreFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
@@ -118,4 +121,13 @@
         android:name="com.example.quickcart.OrderStatusFragment"
         android:label="fragment_order_status"
         tools:layout="@layout/fragment_order_status" />
+    <fragment
+        android:id="@+id/moreFragment"
+        android:name="com.example.quickcart.MoreFragment"
+        android:label="fragment_more"
+        tools:layout="@layout/fragment_more" >
+        <action
+            android:id="@+id/navigateToProductList"
+            app:destination="@id/productsListFragment" />
+    </fragment>
 </navigation>

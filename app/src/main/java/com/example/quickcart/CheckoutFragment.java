@@ -25,6 +25,7 @@ public class CheckoutFragment extends Fragment {
     private TextView titleTextView;
 
     private EditText fullNameEditText;
+    private EditText phoneEditText;
     private EditText houseNumberEditText;
     private EditText streetNameEditText;
     private EditText cityEditText;
@@ -54,6 +55,7 @@ public class CheckoutFragment extends Fragment {
         titleTextView = view.findViewById(R.id.titleTextView);
 
         fullNameEditText = view.findViewById(R.id.fullNameEditText);
+        phoneEditText = view.findViewById(R.id.phoneEditText);
         houseNumberEditText = view.findViewById(R.id.houseNumberEditText);
         streetNameEditText = view.findViewById(R.id.streetNameEditText);
         cityEditText = view.findViewById(R.id.cityEditText);
