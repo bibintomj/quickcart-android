@@ -36,7 +36,7 @@ public class MoreFragment extends Fragment {
 
         tabItem2.setSelected(true);
 
-        // Tab item 2 (Profile)
+        // Tab item 1 (Home)
         tabItem1.setOnClickListener(v -> {
             Navigation.findNavController(view).popBackStack();
         });

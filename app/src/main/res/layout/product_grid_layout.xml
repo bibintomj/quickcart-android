@@ -59,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-black"
+                android:lines="2"
                 android:text="Product Name" />
 
             <TextView
@@ -79,6 +80,7 @@
                 app:cornerRadius="12dp" />
 
             <LinearLayout
+                android:id="@+id/countLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">

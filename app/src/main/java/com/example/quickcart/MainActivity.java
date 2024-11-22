@@ -10,6 +10,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.FirebaseApp;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -25,5 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         Window window = getWindow();
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.white));
+
+        FirebaseApp.initializeApp(this);
     }
 }

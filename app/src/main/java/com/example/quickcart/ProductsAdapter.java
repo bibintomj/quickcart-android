@@ -1,11 +1,20 @@
 package com.example.quickcart;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.example.quickcart.Product.Product;
 
 import java.util.List;
 
@@ -14,10 +23,10 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int TYPE_BANNER = 0;
     private static final int TYPE_GRID_ITEM = 1;
 
-    private final List<String> products;
+    private final List<Product> products;
     private final OnProductClickListener clickListener;
 
-    public ProductsAdapter(List<String> products, OnProductClickListener clickListener) {
+    public ProductsAdapter(List<Product> products, OnProductClickListener clickListener) {
         this.products = products;
         this.clickListener = clickListener;
     }
@@ -43,24 +52,18 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder.getItemViewType() == TYPE_BANNER) {
             BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
-            // Customize banner
+            // Customize banner if needed
         } else {
-            ProductCardHolder productsCardHolder = (ProductCardHolder) holder;
-            String product = products.get(position - 1);
-            productsCardHolder.bind(product);
-            productsCardHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clickListener.onProductClick(product);
-                }
-            });
-            // Customize product card
+            ProductCardHolder productCardHolder = (ProductCardHolder) holder;
+            Product product = products.get(position - 1); // Subtract 1 to account for the banner
+            productCardHolder.bind(product);
+            productCardHolder.itemView.setOnClickListener(view -> clickListener.onProductClick(product));
         }
     }
 
     @Override
     public int getItemCount() {
-        return products.size() + 1;
+        return products.size() + 1; // +1 for the banner
     }
 
     static class BannerViewHolder extends RecyclerView.ViewHolder {
@@ -70,18 +73,55 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     static class ProductCardHolder extends RecyclerView.ViewHolder {
-        // Declare all items in field
+        private final ImageView productImageView;
+        private final TextView priceTextView;
+        private final TextView nameTextView;
+        private final TextView descriptionTextView;
+        private final Button addButton;
+
+        private final LinearLayout countLinearLayout;
+        private final Button decreaseCountButton;
+        private final TextView countTextView;
+        private final Button increaseCountButton;
+
+
+
         public ProductCardHolder(@NonNull View itemView) {
             super(itemView);
-            // initialize all items in field
+            productImageView = itemView.findViewById(R.id.productImageView);
+            priceTextView = itemView.findViewById(R.id.priceTextView);
+            nameTextView = itemView.findViewById(R.id.nameTextView);
+            descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
+            addButton = itemView.findViewById(R.id.addButton);
+            countLinearLayout = itemView.findViewById(R.id.countLinearLayout);
+            decreaseCountButton = itemView.findViewById(R.id.decreaseCountButton);
+            countTextView = itemView.findViewById(R.id.countTextView);
+            increaseCountButton = itemView.findViewById(R.id.increaseCountButton);
         }
 
-        public void bind(String product) {
-            // Set prduct detail to the card cell
+        public void bind(Product product) {
+            nameTextView.setText(product.getTitle());
+            priceTextView.setText(String.format("$%.2f", product.getPrice()));
+//            descriptionTextView.setText(product.getDescription());
+            Glide.with(itemView.getContext())
+                    .load(product.getImage())
+                    .into(productImageView);
+
+            descriptionTextView.setVisibility(View.GONE);
+            countLinearLayout.setVisibility(View.GONE);
+            addButton.setOnClickListener(v -> {
+                Toast.makeText(itemView.getContext(), "Added to Cart" + product.getTitle(), Toast.LENGTH_SHORT).show();
+            });
         }
     }
 
     public interface OnProductClickListener {
-        void onProductClick(String product);
+        void onProductClick(Product product);
+    }
+
+    public void updateProducts(List<Product> newProducts) {
+        this.products.clear();
+        this.products.addAll(newProducts);
+        notifyDataSetChanged(); // reloading the recylcer view
     }
 }

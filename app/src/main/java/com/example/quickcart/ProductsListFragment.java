@@ -8,6 +8,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.quickcart.Product.FirebaseCallback;
+import com.example.quickcart.Product.Product;
+import com.example.quickcart.Product.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,19 +32,15 @@ import java.util.List;
 public class ProductsListFragment extends Fragment {
     private ImageButton cartButton;
     private RecyclerView productsRecyclerView;
-    private RecyclerView.Adapter productsAdapter;
+    private ProductsAdapter productsAdapter;
     private GridLayoutManager layoutManager;
-    private List<String> products = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
+
+    private ProductService productService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        products.add("Bill Gates");
-        products.add("Steve Jobs");
-        products.add("Tim Cook");
-        products.add("Elon Musk");
-        products.add("Jeff Bezos");
-        products.add("Mark Zuckerburg");
     }
 
     @Override
@@ -54,6 +56,8 @@ public class ProductsListFragment extends Fragment {
             }
         });
 
+        productService = ProductService.getInstance();
+
         productsRecyclerView = view.findViewById(R.id.productsRecyclerView);
 
         layoutManager = new GridLayoutManager(getContext(), 2);
@@ -68,13 +72,15 @@ public class ProductsListFragment extends Fragment {
         productsAdapter = new ProductsAdapter(products, product -> {
             NavController navController = Navigation.findNavController(view);
             Bundle bundle = new Bundle();
-            bundle.putString("product", product);
+            bundle.putParcelable("product", product);
             navController.navigate(R.id.navigateToProductDetail, bundle);
         });
 
         productsRecyclerView.setAdapter(productsAdapter);
 
         initializeTabBar(view);
+
+        loadProductData();
         return view;
     }
 
@@ -84,9 +90,31 @@ public class ProductsListFragment extends Fragment {
 
         tabItem1.setSelected(true);
 
-        // Tab item 2 (Profile)
+        // Tab item 2 (More)
         tabItem2.setOnClickListener(v -> {
             Navigation.findNavController(view).navigate(R.id.navigateToMore);
         });
+    }
+
+    private void loadProductData() {
+        if (productService.isDataFetched()) {
+            // Use cached data
+            productsAdapter.updateProducts(productService.getCachedProducts());
+        } else {
+            // Fetch from Firestore
+            productService.fetchProductsFromFirestore(new FirebaseCallback() {
+                @Override
+                public void onSuccess(List<Product> products) {
+                    // Use the fetched data
+                    productsAdapter.updateProducts(products);
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    // Handle failure (e.g., show a toast or an error message)
+                    Toast.makeText(getContext(), "Failed to fetch products", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

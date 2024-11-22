@@ -66,6 +66,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
+                    android:lines="2"
                     android:text="Product Name" />
 
                 <TextView
