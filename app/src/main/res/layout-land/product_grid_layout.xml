@@ -59,6 +59,7 @@
                     android:layout_marginTop="5dp"
                     android:fontFamily="sans-serif-black"
                     android:text="$99.99"
+                    android:textColor="@color/brandMain"
                     android:textSize="16dp" />
 
                 <TextView
@@ -87,6 +88,7 @@
                     app:cornerRadius="12dp" />
 
                 <LinearLayout
+                    android:id="@+id/countLinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">

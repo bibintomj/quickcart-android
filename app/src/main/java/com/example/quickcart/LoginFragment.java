@@ -55,8 +55,8 @@ public class LoginFragment extends Fragment {
     }
 
     private void setDummyEmailPassword() {
-        emailEditText.setText("johnhonai1122@gmail.com");
-        passwordEditText.setText("Pass@1234");
+        emailEditText.setText("steve123@gmail.com");
+        passwordEditText.setText("Pass@123");
     }
 
     private void setupListeners() {
