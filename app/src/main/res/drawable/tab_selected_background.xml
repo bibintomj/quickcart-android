@@ -2,4 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@color/tab_selected_color" />
     <corners android:radius="30dp" />
+    <stroke
+        android:width="0.5dp"
+        android:color="#37242424" />
 </shape>

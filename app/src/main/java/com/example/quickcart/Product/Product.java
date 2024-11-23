@@ -5,11 +5,13 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+
 public class Product implements Parcelable {
     private String category;
     private String description;
     private int id;
-    private String image; // Matches the Firestore "image" field
+    private ArrayList<String> images;
     private double price;
     private Rating rating; // Nested class for the "rating" field
     private String title;
@@ -48,8 +50,8 @@ public class Product implements Parcelable {
         return category;
     }
 
-    public String getImage() {
-        return image;
+    public ArrayList<String> getImages() {
+        return images;
     }
 
     public Rating getRating() {
@@ -76,8 +78,8 @@ public class Product implements Parcelable {
         this.category = category;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImages(ArrayList<String> images) {
+        this.images = images;
     }
 
     public void setRating(Rating rating) {
@@ -91,7 +93,7 @@ public class Product implements Parcelable {
         price = in.readDouble();
         description = in.readString();
         category = in.readString();
-        image = in.readString();
+        images = in.createStringArrayList();
     }
 
     @Override
@@ -106,7 +108,7 @@ public class Product implements Parcelable {
         parcel.writeDouble(price);
         parcel.writeString(description);
         parcel.writeString(category);
-        parcel.writeString(image);
+        parcel.writeStringList(images);
     }
 
     public static class Rating implements Parcelable  {
@@ -167,7 +169,7 @@ public class Product implements Parcelable {
                 ", title='" + title + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
-                ", image='" + image + '\'' +
+                ", images='" + images + '\'' +
                 '}';
     }
 }

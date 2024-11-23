@@ -103,9 +103,17 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             nameTextView.setText(product.getTitle());
             priceTextView.setText(String.format("$%.2f", product.getPrice()));
 //            descriptionTextView.setText(product.getDescription());
-            Glide.with(itemView.getContext())
-                    .load(product.getImage())
-                    .into(productImageView);
+            if (product.getImages() != null && !product.getImages().isEmpty()) {
+                Glide.with(itemView.getContext())
+                        .load(product.getImages().get(0))
+                        .into(productImageView);
+            } else {
+                // Handle the case where images are empty or null
+                // You can load a placeholder image or do something else
+                Glide.with(itemView.getContext())
+                        .load(R.drawable.default_image)  // Placeholder image
+                        .into(productImageView);
+            }
 
             descriptionTextView.setVisibility(View.GONE);
             countLinearLayout.setVisibility(View.GONE);
