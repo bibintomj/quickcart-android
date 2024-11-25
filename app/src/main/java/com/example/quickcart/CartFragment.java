@@ -19,6 +19,9 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.quickcart.Product.CartService;
+import com.example.quickcart.Product.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +43,11 @@ public class CartFragment extends Fragment {
     private Button checkoutButton;
 
     private RecyclerView cartRecyclerView;
-    private RecyclerView.Adapter cartAdapter;
+    private CartAdapter cartAdapter;
     private GridLayoutManager layoutManager;
-    private List<String> products = new ArrayList<>();
+    private List<Product> cartProducts = new ArrayList<>();
+
+    private CartService cartService = CartService.getInstance();
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -53,16 +58,10 @@ public class CartFragment extends Fragment {
         cartRecyclerView.setLayoutManager(layoutManager);
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        products.add("Bill Gates");
-        products.add("Steve Jobs");
-        products.add("Tim Cook");
-        products.add("Elon Musk");
-        products.add("Jeff Bezos");
-        products.add("Mark Zuckerburg");
+        cartProducts = cartService.getCartProducts();
     }
 
     @Override
@@ -83,28 +82,21 @@ public class CartFragment extends Fragment {
         cartRecyclerView = view.findViewById(R.id.cartRecyclerView);
         setupListenersOnView(view);
 
+        // Layout manager based on orientation
         int orientation = getResources().getConfiguration().orientation;
         layoutManager = new GridLayoutManager(requireContext(), orientation == Configuration.ORIENTATION_LANDSCAPE ? 2 : 1);
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                int span = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 2 : 1;
-                return position == products.size() ? span : 1;
-            }
-        });
         cartRecyclerView.setLayoutManager(layoutManager);
-        cartAdapter = new CartAdapter(products, product -> {
+
+        // Setup cart adapter
+        cartAdapter = new CartAdapter(cartProducts, product -> {
             NavController navController = Navigation.findNavController(view);
             Bundle bundle = new Bundle();
-            bundle.putString("product", product);
+            bundle.putParcelable("product", product);  // Assuming you pass Product as Parcelable
             navController.navigate(R.id.navigateToProductDetail, bundle);
-        });
+        }, this::onCartChange);
 
         cartRecyclerView.setAdapter(cartAdapter);
-        Boolean hasProducts = (products != null && !products.isEmpty());
-        ctaContainerLinearLayout.setVisibility(hasProducts ? View.VISIBLE : View.INVISIBLE);
-        noContentLinearLayout.setVisibility(hasProducts ? View.INVISIBLE : View.VISIBLE);
-
+        onCartChange();
         return view;
     }
 
@@ -136,5 +128,17 @@ public class CartFragment extends Fragment {
                 Navigation.findNavController(view).popBackStack(R.id.productsListFragment, false);
             }
         });
+    }
+
+    // Update UI visibility based on cart contents
+    public void onCartChange() {
+        cartProducts = cartService.getCartProducts();
+        boolean hasProducts = (cartProducts != null && !cartProducts.isEmpty());
+        cartRecyclerView.setVisibility(hasProducts ? View.VISIBLE : View.INVISIBLE);
+        ctaContainerLinearLayout.setVisibility(hasProducts ? View.VISIBLE : View.INVISIBLE);
+        noContentLinearLayout.setVisibility(hasProducts ? View.INVISIBLE : View.VISIBLE);
+        continueShoppingButton.setVisibility(hasProducts ? View.VISIBLE : View.INVISIBLE);
+        totalAmountTextView.setText(String.format("$%.2f", cartService.getTotalPriceWithTax()));
+        cartAdapter.updateProductList(cartProducts);
     }
 }

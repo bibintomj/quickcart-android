@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.quickcart.Product.CartService;
 import com.example.quickcart.Product.Product;
 
 import java.util.List;
@@ -84,7 +85,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private final TextView countTextView;
         private final Button increaseCountButton;
 
-
+        private final CartService cartService = CartService.getInstance();
 
         public ProductCardHolder(@NonNull View itemView) {
             super(itemView);
@@ -108,18 +109,37 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         .load(product.getImages().get(0))
                         .into(productImageView);
             } else {
-                // Handle the case where images are empty or null
-                // You can load a placeholder image or do something else
                 Glide.with(itemView.getContext())
                         .load(R.drawable.default_image)  // Placeholder image
                         .into(productImageView);
             }
 
             descriptionTextView.setVisibility(View.GONE);
-            countLinearLayout.setVisibility(View.GONE);
-            addButton.setOnClickListener(v -> {
-                Toast.makeText(itemView.getContext(), "Added to Cart" + product.getTitle(), Toast.LENGTH_SHORT).show();
+            setupListenersForProductCountChange(product);
+            updateViewWithProductCountInCart(CartService.getInstance().getProductQuantity(product));
+        }
+
+        private void setupListenersForProductCountChange(Product product) {
+            decreaseCountButton.setOnClickListener(v -> {
+                int updatedCount = CartService.getInstance().removeFromCart(product);
+                updateViewWithProductCountInCart(updatedCount);
             });
+
+            increaseCountButton.setOnClickListener(v -> {
+                int updatedCount = CartService.getInstance().addToCart(product);
+                updateViewWithProductCountInCart(updatedCount);
+            });
+
+            addButton.setOnClickListener(v -> {
+                int updatedCount = CartService.getInstance().addToCart(product);
+                updateViewWithProductCountInCart(updatedCount);
+            });
+        }
+
+        private void updateViewWithProductCountInCart(int count) {
+            countTextView.setText(String.valueOf(count));
+            countLinearLayout.setVisibility(count == 0 ? View.GONE : View.VISIBLE);
+            addButton.setVisibility(count == 0 ? View.VISIBLE : View.GONE);
         }
     }
 

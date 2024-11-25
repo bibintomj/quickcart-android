@@ -84,6 +84,7 @@
                 android:id="@+id/countLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <Button
@@ -103,8 +104,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif-black"
                     android:text="99"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/increaseCountButton"
