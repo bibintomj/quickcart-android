@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -78,6 +79,8 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private final TextView priceTextView;
         private final TextView nameTextView;
         private final TextView descriptionTextView;
+        private View starBar;
+
         private final Button addButton;
 
         private final LinearLayout countLinearLayout;
@@ -93,6 +96,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             priceTextView = itemView.findViewById(R.id.priceTextView);
             nameTextView = itemView.findViewById(R.id.nameTextView);
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
+            starBar = itemView.findViewById(R.id.starBar);
             addButton = itemView.findViewById(R.id.addButton);
             countLinearLayout = itemView.findViewById(R.id.countLinearLayout);
             decreaseCountButton = itemView.findViewById(R.id.decreaseCountButton);
@@ -115,6 +119,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
 
             descriptionTextView.setVisibility(View.GONE);
+            updateStarBar(product.getRating().getRate());
             setupListenersForProductCountChange(product);
             updateViewWithProductCountInCart(CartService.getInstance().getProductQuantity(product));
         }
@@ -140,6 +145,24 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             countTextView.setText(String.valueOf(count));
             countLinearLayout.setVisibility(count == 0 ? View.GONE : View.VISIBLE);
             addButton.setVisibility(count == 0 ? View.VISIBLE : View.GONE);
+        }
+
+        private void updateStarBar(double rating) {
+            ImageView[] stars = {
+                    starBar.findViewById(R.id.star1),
+                    starBar.findViewById(R.id.star2),
+                    starBar.findViewById(R.id.star3),
+                    starBar.findViewById(R.id.star4),
+                    starBar.findViewById(R.id.star5)
+            };
+
+            for (int i = 0; i < stars.length; i++) {
+                if (rating > i) {
+                    stars[i].setColorFilter(ContextCompat.getColor(itemView.getContext(), R.color.yellow));
+                } else {
+                    stars[i].setColorFilter(ContextCompat.getColor(itemView.getContext(), R.color.gray));
+                }
+            }
         }
     }
 

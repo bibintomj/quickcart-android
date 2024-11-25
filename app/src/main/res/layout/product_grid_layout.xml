@@ -71,6 +71,16 @@
                 android:lines="2"
                 android:text="Product Description" />
 
+            <include
+                android:id="@+id/starBar"
+                layout="@layout/star_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <Button
                 android:id="@+id/addButton"
                 android:layout_width="match_parent"

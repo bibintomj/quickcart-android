@@ -70,7 +70,6 @@ public class ProductDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    // Example: Set star colors based on a rating
     private void updateStarBar(float rating) {
         ImageView[] stars = {
                 starBar.findViewById(R.id.star1),
