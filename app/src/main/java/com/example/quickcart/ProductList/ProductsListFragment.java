@@ -1,4 +1,4 @@
-package com.example.quickcart;
+package com.example.quickcart.ProductList;
 
 import android.os.Bundle;
 
@@ -12,15 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.quickcart.Product.FirebaseCallback;
-import com.example.quickcart.Product.Product;
-import com.example.quickcart.Product.ProductService;
+import com.example.quickcart.R;
+import com.example.quickcart.Services.FirebaseCallback;
+import com.example.quickcart.Modal.Product;
+import com.example.quickcart.Services.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,10 +69,7 @@ public class ProductsListFragment extends Fragment {
 
         productsRecyclerView.setLayoutManager(layoutManager);
         productsAdapter = new ProductsAdapter(products, product -> {
-            NavController navController = Navigation.findNavController(view);
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("product", product);
-            navController.navigate(R.id.navigateToProductDetail, bundle);
+            this.navigateToProductDetail(product);
         });
 
         productsRecyclerView.setAdapter(productsAdapter);
@@ -94,6 +90,17 @@ public class ProductsListFragment extends Fragment {
         tabItem2.setOnClickListener(v -> {
             Navigation.findNavController(view).navigate(R.id.navigateToMore);
         });
+    }
+
+    private void navigateToProductDetail(Product product) {
+        if (getView() == null) {
+            Log.e("navigation error", "cannot navigate because root view is null.");
+            return;
+        }
+        NavController navController = Navigation.findNavController(this.getView());
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("product", product);
+        navController.navigate(R.id.navigateToProductDetail, bundle);
     }
 
     private void loadProductData() {

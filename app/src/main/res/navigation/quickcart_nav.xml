@@ -49,7 +49,7 @@
         tools:layout="@layout/fragment_join" />
     <fragment
         android:id="@+id/productsListFragment"
-        android:name="com.example.quickcart.ProductsListFragment"
+        android:name="com.example.quickcart.ProductList.ProductsListFragment"
         android:label="fragment_products_list"
         tools:layout="@layout/fragment_products_list" >
         <action
@@ -72,7 +72,7 @@
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
-        android:name="com.example.quickcart.ProductDetailFragment"
+        android:name="com.example.quickcart.ProductDetail.ProductDetailFragment"
         android:label="fragment_product_detail"
         tools:layout="@layout/fragment_product_detail" >
         <action
@@ -85,7 +85,7 @@
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.example.quickcart.CartFragment"
+        android:name="com.example.quickcart.Cart.CartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" >
         <action

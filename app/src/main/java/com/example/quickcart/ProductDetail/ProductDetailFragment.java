@@ -1,26 +1,28 @@
-package com.example.quickcart;
+package com.example.quickcart.ProductDetail;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.Toolbar;
+import com.example.quickcart.Services.CartService;
+import com.example.quickcart.Modal.Product;
+import com.example.quickcart.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,7 +34,9 @@ public class ProductDetailFragment extends Fragment {
     private TextView titleTextView;
     private ImageButton cartButton;
 
-    private ImageView bannerImageView;
+    private ViewPager2 imagePageViewer2;
+    RecyclerView.Adapter adapter;
+
     private TextView priceTextView;
     private TextView productNameTextView;
     private TextView soldByTextView;
@@ -42,11 +46,16 @@ public class ProductDetailFragment extends Fragment {
     private TextView returnTextView;
     private TextView productDescription;
 
+    private LinearLayout countLinearLayout;
     private Button decreaseCountButton;
     private TextView countTextView;
     private Button increaseCountButton;
 
     private Button addButton;
+
+    private Product product;
+
+    private CartService cartService = CartService.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,19 +67,40 @@ public class ProductDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product_detail, container, false);
-        String productName = getArguments().getString("product", "No Product");
         extractComponentReferencesInView(view);
         setupListenersOnView(view);
-        updateStarBar(4);
+        Log.i("ABC","onCreateView");
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (getArguments() != null) {
+            product = getArguments().getParcelable("product");
+        }
+        if (product != null) {
+            populateProductData();
+        } else {
+            Log.e("ProductDetailFragment", "Product is null");
+        }
     }
 
-    private void updateStarBar(float rating) {
+    private void populateProductData() {
+        adapter = new ProductImageAdapter(product.getImages());
+        imagePageViewer2.setAdapter(adapter);
+        priceTextView.setText(product.getPriceFormattedString());
+        productNameTextView.setText(product.getTitle());;
+        soldByTextView.setText("");
+        updateStarBar(product.getRating().getRate());
+        returnTextView.setText("");
+        productDescription.setText(product.getDescription());
+
+        setupListenersForProductCountChange(product);
+        updateViewWithProductCountInCart(cartService.getProductQuantity(product));
+    }
+
+    private void updateStarBar(double rating) {
         ImageView[] stars = {
                 starBar.findViewById(R.id.star1),
                 starBar.findViewById(R.id.star2),
@@ -93,13 +123,14 @@ public class ProductDetailFragment extends Fragment {
         titleTextView = view.findViewById(R.id.titleTextView);
         cartButton = view.findViewById(R.id.cartButton);
 
-        bannerImageView = view.findViewById(R.id.bannerImageView);
+        imagePageViewer2 = view.findViewById(R.id.productImageViewPager2);
         priceTextView = view.findViewById(R.id.priceTextView);
         productNameTextView = view.findViewById(R.id.productNameTextView);
         soldByTextView = view.findViewById(R.id.soldByTextView);
         starBar = view.findViewById(R.id.starBar);
         returnTextView = view.findViewById(R.id.returnTextView);
         productDescription = view.findViewById(R.id.productDescription);
+        countLinearLayout = view.findViewById(R.id.countLinearLayout);
         decreaseCountButton = view.findViewById(R.id.decreaseCountButton);
         countTextView = view.findViewById(R.id.countTextView);
         increaseCountButton = view.findViewById(R.id.increaseCountButton);
@@ -119,5 +150,28 @@ public class ProductDetailFragment extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.navigateToCart);
             }
         });
+    }
+
+    private void setupListenersForProductCountChange(Product product) {
+        decreaseCountButton.setOnClickListener(v -> {
+            int updatedCount = CartService.getInstance().removeFromCart(product);
+            updateViewWithProductCountInCart(updatedCount);
+        });
+
+        increaseCountButton.setOnClickListener(v -> {
+            int updatedCount = CartService.getInstance().addToCart(product);
+            updateViewWithProductCountInCart(updatedCount);
+        });
+
+        addButton.setOnClickListener(v -> {
+            int updatedCount = CartService.getInstance().addToCart(product);
+            updateViewWithProductCountInCart(updatedCount);
+        });
+    }
+
+    private void updateViewWithProductCountInCart(int count) {
+        countTextView.setText(String.valueOf(count));
+        countLinearLayout.setVisibility(count == 0 ? View.GONE : View.VISIBLE);
+        addButton.setVisibility(count == 0 ? View.VISIBLE : View.GONE);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.quickcart.Product;
+package com.example.quickcart.Modal;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -41,6 +41,10 @@ public class Product implements Parcelable {
 
     public double getPrice() {
         return price;
+    }
+
+    public String getPriceFormattedString() {
+        return String.format("$%.2f", getPrice());
     }
 
     public String getDescription() {

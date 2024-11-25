@@ -68,8 +68,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
-                android:lines="2"
-                android:text="Product Description" />
+                android:lines="1"
+                android:text="Product Description"
+                android:textColor="@color/gray" />
 
             <include
                 android:id="@+id/starBar"

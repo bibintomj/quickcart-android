@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:backgroundTint="@color/white"
-    tools:context=".ProductDetailFragment">
+    tools:context=".ProductDetail.ProductDetailFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,10 +56,9 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="80dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -67,19 +66,17 @@
             app:layout_constraintTop_toBottomOf="@+id/titleTextView">
 
             <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_weight="2"
                 app:cardCornerRadius="15dp">
 
-                <ImageView
-                    android:id="@+id/bannerImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="200dp"
-                    tools:src="@tools:sample/backgrounds/scenic" />
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/productImageViewPager2"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp" />
             </androidx.cardview.widget.CardView>
 
             <ScrollView
@@ -99,6 +96,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginRight="16dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -108,6 +106,7 @@
                             android:layout_marginTop="16dp"
                             android:fontFamily="sans-serif-black"
                             android:text="$99.99"
+                            android:textColor="@color/brandMain"
                             android:textSize="20sp" />
 
                         <TextView
@@ -176,7 +175,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:fontFamily="sans-serif-medium"
-                            android:lines="5"
                             android:text="description"
                             android:textSize="16sp" />
 
@@ -186,10 +184,22 @@
             </ScrollView>
         </LinearLayout>
 
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="5dp"
+            android:background="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/countLinearLayout"
+            app:layout_constraintEnd_toEndOf="@+id/countLinearLayout"
+            app:layout_constraintStart_toStartOf="@+id/countLinearLayout"
+            app:layout_constraintTop_toTopOf="@+id/countLinearLayout" />
+
         <LinearLayout
-            android:id="@+id/linearLayout3"
+            android:id="@+id/countLinearLayout"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:orientation="horizontal"
@@ -201,9 +211,11 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/brandMain"
-                android:fontFamily="sans-serif"
+                android:backgroundTint="@color/secondaryBackground"
+                android:fontFamily="sans-serif-black"
                 android:text="-"
+                android:textColor="@color/brandMain"
+                android:textSize="16sp"
                 app:cornerRadius="12dp" />
 
             <TextView
@@ -211,30 +223,37 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-black"
                 android:text="99"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/increaseCountButton"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/brandMain"
+                android:backgroundTint="@color/secondaryBackground"
+                android:fontFamily="sans-serif-black"
                 android:text="+"
+                android:textColor="@color/brandMain"
+                android:textSize="16sp"
                 app:cornerRadius="12dp" />
         </LinearLayout>
 
         <Button
             android:id="@+id/addButton"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/brandMain"
             android:text="+ Add"
+            android:visibility="invisible"
             app:cornerRadius="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>

@@ -1,6 +1,5 @@
-package com.example.quickcart;
+package com.example.quickcart.ProductList;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,15 +7,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.quickcart.Product.CartService;
-import com.example.quickcart.Product.Product;
+import com.example.quickcart.R;
+import com.example.quickcart.Services.CartService;
+import com.example.quickcart.Modal.Product;
 
 import java.util.List;
 
@@ -107,7 +106,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public void bind(Product product) {
             nameTextView.setText(product.getTitle());
             priceTextView.setText(String.format("$%.2f", product.getPrice()));
-//            descriptionTextView.setText(product.getDescription());
+            descriptionTextView.setText(product.getCategory());
             if (product.getImages() != null && !product.getImages().isEmpty()) {
                 Glide.with(itemView.getContext())
                         .load(product.getImages().get(0))
@@ -118,7 +117,6 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         .into(productImageView);
             }
 
-            descriptionTextView.setVisibility(View.GONE);
             updateStarBar(product.getRating().getRate());
             setupListenersForProductCountChange(product);
             updateViewWithProductCountInCart(CartService.getInstance().getProductQuantity(product));

@@ -1,4 +1,6 @@
-package com.example.quickcart.Product;
+package com.example.quickcart.Services;
+
+import com.example.quickcart.Modal.Product;
 
 import java.util.ArrayList;
 import java.util.HashMap;

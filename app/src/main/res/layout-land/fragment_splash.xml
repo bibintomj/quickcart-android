@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="16dp"
             android:backgroundTint="@color/brandMain"
             android:text="Get Started"
             android:textColorLink="#4f53e5"
