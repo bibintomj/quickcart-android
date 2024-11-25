@@ -11,7 +11,7 @@ public class CartService {
     private static CartService instance;
     private Map<Product, Integer> cartItems; // Product as key, Quantity as value
 
-    private double taxPercentage = 0.13; // 13% tax
+    private double taxPercentage  = 0.13; // 13% tax
 
     private CartService() {
         cartItems = new HashMap<>();

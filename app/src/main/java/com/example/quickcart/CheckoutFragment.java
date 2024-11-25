@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.quickcart.Services.CartService;
+
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,6 +76,7 @@ public class CheckoutFragment extends Fragment {
         totalAmountTextView = view.findViewById(R.id.totalAmountTextView);
         placeOrderButton = view.findViewById(R.id.placeOrderButton);
         setupListenersOnView(view);
+        totalAmountTextView.setText(String.format("$%.2f", CartService.getInstance().getTotalPriceWithTax()));
         return view;
     }
 
@@ -84,8 +91,100 @@ public class CheckoutFragment extends Fragment {
         placeOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View button) {
-                Navigation.findNavController(view).navigate(R.id.navigateToOrderStatus);
+                if (validateFields()) {
+                    // Navigate to the next screen
+                    Navigation.findNavController(view).navigate(R.id.navigateToOrderStatus);
+                }
             }
         });
     }
+
+    private boolean validateFields() {
+        boolean isValid = true;
+
+        // Checking if name is empty
+        if (TextUtils.isEmpty(fullNameEditText.getText())) {
+            fullNameEditText.setError("Full name is required");
+            isValid = false;
+        }
+
+        // checking if number is empty as well as it matches phone pattern
+        if (TextUtils.isEmpty(phoneEditText.getText()) || !Patterns.PHONE.matcher(phoneEditText.getText()).matches()) {
+            phoneEditText.setError("Invalid phone number");
+            isValid = false;
+        }
+
+        // checking if empty
+        if (TextUtils.isEmpty(houseNumberEditText.getText())) {
+            houseNumberEditText.setError("House number is required");
+            isValid = false;
+        }
+
+        // checking if empty
+        if (TextUtils.isEmpty(streetNameEditText.getText())) {
+            streetNameEditText.setError("Street name is required");
+            isValid = false;
+        }
+
+        // checking if empty
+        if (TextUtils.isEmpty(cityEditText.getText())) {
+            cityEditText.setError("City is required");
+            isValid = false;
+        }
+
+        // postal code validation.
+        if (TextUtils.isEmpty(postalCodeEditText.getText())) {
+            postalCodeEditText.setError("Postal code is required");
+            isValid = false;
+        } else {
+            String postalCode = postalCodeEditText.getText().toString().trim();
+            if (!postalCode.matches("^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$")) { // this matches canada's postal code pattern
+                postalCodeEditText.setError("Postal code must be in format XXX XXX. (e.g., N2M 3T2)");
+                isValid = false;
+            }
+        }
+
+        if (TextUtils.isEmpty(nameOnCardEditText.getText())) {
+            nameOnCardEditText.setError("Name on card is required");
+            isValid = false;
+        }
+
+        if (TextUtils.isEmpty(cardNumberEditText.getText()) || cardNumberEditText.getText().length() != 16) {
+            cardNumberEditText.setError("Invalid card number");
+            isValid = false;
+        }
+        if (TextUtils.isEmpty(expiryEditText.getText()) || !expiryEditText.getText().toString().matches("\\d{2}/\\d{2}")) {
+            expiryEditText.setError("Invalid expiry date (MM/YY)");
+            isValid = false;
+        } else {
+            // parsing input
+            String[] parts = expiryEditText.getText().toString().split("/");
+            int month = Integer.parseInt(parts[0]);
+            int year = Integer.parseInt(parts[1]) + 2000; // convert YY to YYYY
+
+            // check month range
+            if (month < 1 || month > 12) {
+                expiryEditText.setError("Invalid month in expiry date");
+                isValid = false;
+            } else {
+                // checking if date is future
+                Calendar calendar = Calendar.getInstance();
+                int currentMonth = calendar.get(Calendar.MONTH) + 1;
+                int currentYear = calendar.get(Calendar.YEAR);
+
+                if (year < currentYear || (year == currentYear && month < currentMonth)) {
+                    expiryEditText.setError("Expiry date must be in the future");
+                    isValid = false;
+                }
+            }
+        }
+
+        if (TextUtils.isEmpty(cvvEditText.getText()) || cvvEditText.getText().length() != 3) {
+            cvvEditText.setError("Invalid CVV");
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
 }

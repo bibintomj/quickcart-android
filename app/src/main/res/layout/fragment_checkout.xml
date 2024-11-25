@@ -154,6 +154,7 @@
                                     android:ems="10"
                                     android:hint="Postal Code"
                                     android:inputType="text|textPostalAddress"
+                                    android:maxLength="7"
                                     android:paddingHorizontal="20dp" />
 
                             </LinearLayout>
