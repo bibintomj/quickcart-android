@@ -230,7 +230,6 @@ public class CheckoutFragment extends Fragment {
                 new OrderService.OrderCallback() {
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(getContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
                         CartService.getInstance().clearCart();
                         Navigation.findNavController(getView()).navigate(R.id.navigateToOrderStatus);
                     }
