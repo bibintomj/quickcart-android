@@ -1,5 +1,7 @@
 package com.example.quickcart;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,8 +17,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.quickcart.Model.PaymentDetails;
+import com.example.quickcart.Model.ShippingAddress;
 import com.example.quickcart.Services.CartService;
+import com.example.quickcart.Services.OrderService;
 
 import java.util.Calendar;
 
@@ -92,8 +98,7 @@ public class CheckoutFragment extends Fragment {
             @Override
             public void onClick(View button) {
                 if (validateFields()) {
-                    // Navigate to the next screen
-                    Navigation.findNavController(view).navigate(R.id.navigateToOrderStatus);
+                    initiatePaymentAndPlaceOrder();
                 }
             }
         });
@@ -187,4 +192,54 @@ public class CheckoutFragment extends Fragment {
         return isValid;
     }
 
+    private void initiatePaymentAndPlaceOrder() {
+        CartService cartService = CartService.getInstance();
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", null);
+
+        // Trimmed input values
+        String fullName = fullNameEditText.getText().toString().trim();
+        String phone = phoneEditText.getText().toString().trim();
+        String houseNumber = houseNumberEditText.getText().toString().trim();
+        String streetName = streetNameEditText.getText().toString().trim();
+        String city = cityEditText.getText().toString().trim();
+        String postalCode = postalCodeEditText.getText().toString().trim();
+
+        // make ShippingAddress object
+        ShippingAddress shippingAddress = new ShippingAddress(fullName, phone,
+                houseNumber, streetName,
+                city, postalCode,
+                provinceSpinner.getSelectedItem().toString()
+        );
+
+        // get payment info
+        String nameOnCard = nameOnCardEditText.getText().toString().trim();
+        String cardNumber = cardNumberEditText.getText().toString().trim();
+        String expiry = expiryEditText.getText().toString().trim();
+        String cvv = cvvEditText.getText().toString().trim();
+
+        // make PaymentDetails object
+        PaymentDetails paymentDetails = new PaymentDetails(nameOnCard, cardNumber, expiry, cvv);
+
+        OrderService.getInstance().placeOrder(
+                userId,
+                shippingAddress,
+                paymentDetails,
+                cartService.getCartItems(), // Pass the Map<Product, Integer>
+                cartService.getTotalPriceWithTax(),
+                new OrderService.OrderCallback() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(getContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                        CartService.getInstance().clearCart();
+                        Navigation.findNavController(getView()).navigate(R.id.navigateToOrderStatus);
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Toast.makeText(getContext(), "Failed to place order: " + errorMessage, Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.quickcart.Modal;
+package com.example.quickcart.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

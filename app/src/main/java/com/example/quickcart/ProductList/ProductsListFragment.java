@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.quickcart.R;
 import com.example.quickcart.Services.FirebaseCallback;
-import com.example.quickcart.Modal.Product;
+import com.example.quickcart.Model.Product;
 import com.example.quickcart.Services.ProductService;
 
 import java.util.ArrayList;

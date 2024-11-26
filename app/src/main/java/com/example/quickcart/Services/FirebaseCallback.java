@@ -1,6 +1,6 @@
 package com.example.quickcart.Services;
 
-import com.example.quickcart.Modal.Product;
+import com.example.quickcart.Model.Product;
 
 import java.util.List;
 

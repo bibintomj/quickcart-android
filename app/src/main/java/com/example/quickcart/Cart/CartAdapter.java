@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.quickcart.R;
 import com.example.quickcart.Services.CartService;
-import com.example.quickcart.Modal.Product;
+import com.example.quickcart.Model.Product;
 
 import java.util.List;
 

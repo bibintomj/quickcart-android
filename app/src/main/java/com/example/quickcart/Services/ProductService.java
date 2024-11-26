@@ -2,7 +2,7 @@ package com.example.quickcart.Services;
 
 import android.util.Log;
 
-import com.example.quickcart.Modal.Product;
+import com.example.quickcart.Model.Product;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;

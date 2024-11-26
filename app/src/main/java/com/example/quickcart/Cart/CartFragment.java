@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.example.quickcart.R;
 import com.example.quickcart.Services.CartService;
-import com.example.quickcart.Modal.Product;
+import com.example.quickcart.Model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
