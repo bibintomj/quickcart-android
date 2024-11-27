@@ -96,12 +96,15 @@ public class LoginFragment extends Fragment {
     }
 
     private void performLogin(String email, String password, View view) {
+        handleViewStateWhenActionInProgrss(true);
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        handleViewStateWhenActionInProgrss(false);
                         if (task.isSuccessful()) {
                             // login success. store user data locally
                             FirebaseUser user = mAuth.getCurrentUser();
@@ -126,5 +129,12 @@ public class LoginFragment extends Fragment {
         editor.putString("userEmail", user.getEmail());
         editor.putString("userDisplayName", user.getDisplayName());
         editor.apply();
+    }
+
+    private void handleViewStateWhenActionInProgrss(boolean inProgress) {
+        loginButton.setEnabled(!inProgress);
+        loginButton.setAlpha(inProgress ? 0.6F : 1);
+        joinButton.setEnabled(!inProgress);
+        joinButton.setAlpha(inProgress ? 0.6F : 1);
     }
 }

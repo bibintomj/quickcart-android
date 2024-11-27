@@ -62,10 +62,12 @@ public class JoinFragment extends Fragment {
     }
 
     private void performSignUp(String name, String email, String password) {
+        handleViewStateWhenActionInProgrss(true);
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        handleViewStateWhenActionInProgrss(false);
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
 
@@ -179,5 +181,12 @@ public class JoinFragment extends Fragment {
         }
 
         return true;
+    }
+
+    private void handleViewStateWhenActionInProgrss(boolean inProgress) {
+        joinButton.setEnabled(!inProgress);
+        joinButton.setAlpha(inProgress ? 0.6F : 1);
+        loginButton.setEnabled(!inProgress);
+        loginButton.setAlpha(inProgress ? 0.6F : 1);
     }
 }

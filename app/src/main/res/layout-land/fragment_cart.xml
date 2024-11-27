@@ -87,7 +87,7 @@
                     android:textSize="20sp" />
 
                 <Button
-                    android:id="@+id/noContentContinueShoppingButton"
+                    android:id="@+id/noContentPlaceOrderButton"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"

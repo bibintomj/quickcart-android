@@ -1,20 +1,31 @@
 package com.example.quickcart.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
-public class Order {
+public class Order implements Parcelable {
+    private String orderId;
     private String userId;
     private ShippingAddress shippingAddress;
     private PaymentDetails paymentDetails;
     private double totalAmount;
-    private List<Map<String, Object>> products; // Each product contains id, count, and price
+    private List<ProductDetails> products; // Each product contains id, count, and price
     private String status; // Example: "Pending", "Completed"
     private long orderTimestamp;
 
+    public Order() {
+    }
+
     // Constructor
     public Order(String userId, ShippingAddress shippingAddress, PaymentDetails paymentDetails,
-                 double totalAmount, List<Map<String, Object>> products, String status, long orderTimestamp) {
+                 double totalAmount, List<ProductDetails> products, String status, long orderTimestamp) {
+        this.orderId = UUID.randomUUID().toString();
         this.userId = userId;
         this.shippingAddress = shippingAddress;
         this.paymentDetails = paymentDetails;
@@ -24,7 +35,37 @@ public class Order {
         this.orderTimestamp = orderTimestamp;
     }
 
+    protected Order(Parcel in) {
+        orderId = in.readString();
+        userId = in.readString();
+        shippingAddress = in.readParcelable(ShippingAddress.class.getClassLoader());
+        paymentDetails = in.readParcelable(PaymentDetails.class.getClassLoader());
+        totalAmount = in.readDouble();
+        status = in.readString();
+        orderTimestamp = in.readLong();
+    }
+
+    public static final Creator<Order> CREATOR = new Creator<Order>() {
+        @Override
+        public Order createFromParcel(Parcel in) {
+            return new Order(in);
+        }
+
+        @Override
+        public Order[] newArray(int size) {
+            return new Order[size];
+        }
+    };
+
     // Getters and Setters
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId() {
+        this.orderId = orderId;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -57,11 +98,11 @@ public class Order {
         this.totalAmount = totalAmount;
     }
 
-    public List<Map<String, Object>> getProducts() {
+    public List<ProductDetails> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Map<String, Object>> products) {
+    public void setProducts(List<ProductDetails> products) {
         this.products = products;
     }
 
@@ -79,5 +120,22 @@ public class Order {
 
     public void setOrderTimestamp(long orderTimestamp) {
         this.orderTimestamp = orderTimestamp;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(orderId);
+        parcel.writeString(userId);
+        parcel.writeParcelable(shippingAddress, i);
+        parcel.writeParcelable(paymentDetails, i);
+        parcel.writeDouble(totalAmount);
+        parcel.writeTypedList(products);
+        parcel.writeString(status);
+        parcel.writeLong(orderTimestamp);
     }
 }

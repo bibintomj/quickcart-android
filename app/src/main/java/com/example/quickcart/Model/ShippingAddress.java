@@ -1,7 +1,12 @@
 package com.example.quickcart.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 // ShippingAddress class to represent the shipping details
-public class ShippingAddress {
+public class ShippingAddress implements Parcelable {
     private String fullName;
     private String phone;
     private String houseNumber;
@@ -9,6 +14,9 @@ public class ShippingAddress {
     private String city;
     private String postalCode;
     private String province;
+
+    public ShippingAddress() {
+    }
 
     // Constructor
     public ShippingAddress(String fullName, String phone, String houseNumber, String streetName,
@@ -21,6 +29,28 @@ public class ShippingAddress {
         this.postalCode = postalCode;
         this.province = province;
     }
+
+    protected ShippingAddress(Parcel in) {
+        fullName = in.readString();
+        phone = in.readString();
+        houseNumber = in.readString();
+        streetName = in.readString();
+        city = in.readString();
+        postalCode = in.readString();
+        province = in.readString();
+    }
+
+    public static final Creator<ShippingAddress> CREATOR = new Creator<ShippingAddress>() {
+        @Override
+        public ShippingAddress createFromParcel(Parcel in) {
+            return new ShippingAddress(in);
+        }
+
+        @Override
+        public ShippingAddress[] newArray(int size) {
+            return new ShippingAddress[size];
+        }
+    };
 
     // Getters and Setters
     public String getFullName() {
@@ -77,6 +107,22 @@ public class ShippingAddress {
 
     public void setProvince(String province) {
         this.province = province;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(fullName);
+        parcel.writeString(phone);
+        parcel.writeString(houseNumber);
+        parcel.writeString(streetName);
+        parcel.writeString(city);
+        parcel.writeString(postalCode);
+        parcel.writeString(province);
     }
 }
 

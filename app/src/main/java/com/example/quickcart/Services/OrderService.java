@@ -3,6 +3,7 @@ package com.example.quickcart.Services;
 import com.example.quickcart.Model.Order;
 import com.example.quickcart.Model.PaymentDetails;
 import com.example.quickcart.Model.Product;
+import com.example.quickcart.Model.ProductDetails;
 import com.example.quickcart.Model.ShippingAddress;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -36,22 +37,18 @@ public class OrderService {
     public void placeOrder(String userId, ShippingAddress shippingAddress, PaymentDetails paymentDetails,
                                         Map<Product, Integer> cartItems, double totalAmount,  OrderCallback callback) {
 
-        List<Map<String, Object>> productDetails = new ArrayList<>();
+        List<ProductDetails> products = new ArrayList<>();
         for (Map.Entry<Product, Integer> entry : cartItems.entrySet()) {
             Product product = entry.getKey();
             Integer count = entry.getValue();
 
-            Map<String, Object> productMap = new HashMap<>();
-            productMap.put("id", product.getId());
-            productMap.put("title", product.getTitle());
-            productMap.put("count", count);
-            productMap.put("price", product.getPrice());
-            productDetails.add(productMap);
+            ProductDetails details = new ProductDetails(product.getId(), product.getTitle(), count, product.getPrice());
+            products.add(details);
         }
 
         Order order = new Order(userId, shippingAddress,
                                 paymentDetails, totalAmount,
-                                productDetails, "Pending",
+                                products, "Pending",
                                 System.currentTimeMillis());
 
         // writing to firestore (placing order)

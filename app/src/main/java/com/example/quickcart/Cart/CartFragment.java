@@ -75,7 +75,7 @@ public class CartFragment extends Fragment {
         ctaContainerLinearLayout = view.findViewById(R.id.ctaContainerLinearLayout);
         totalAmountTextView = view.findViewById(R.id.totalAmountTextView);
         checkoutButton = view.findViewById(R.id.checkoutButton);
-        noContentContinueShoppingButton = view.findViewById(R.id.noContentContinueShoppingButton);
+        noContentContinueShoppingButton = view.findViewById(R.id.noContentPlaceOrderButton);
         noContentLinearLayout = view.findViewById(R.id.noContentLinearLayout);
 
         cartRecyclerView = view.findViewById(R.id.cartRecyclerView);
@@ -90,7 +90,7 @@ public class CartFragment extends Fragment {
         cartAdapter = new CartAdapter(cartProducts, product -> {
             NavController navController = Navigation.findNavController(view);
             Bundle bundle = new Bundle();
-            bundle.putParcelable("product", product);  // Assuming you pass Product as Parcelable
+            bundle.putParcelable("product", product);
             navController.navigate(R.id.navigateToProductDetail, bundle);
         }, this::onCartChange);
 

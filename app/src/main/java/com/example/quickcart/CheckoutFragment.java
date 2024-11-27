@@ -241,4 +241,9 @@ public class CheckoutFragment extends Fragment {
                 }
         );
     }
+
+    private void handleViewStateWhenActionInProgrss(boolean inProgress) {
+        placeOrderButton.setEnabled(!inProgress);
+        placeOrderButton.setAlpha(inProgress ? 0.6F : 1);
+    }
 }
