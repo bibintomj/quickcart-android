@@ -31,6 +31,7 @@ public class MoreFragment extends Fragment {
     Button purchaseHistoryButton;
     TextView appInfoTextView;
     Button logoutButton;
+    TextView greetingTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,9 @@ public class MoreFragment extends Fragment {
         purchaseHistoryButton = view.findViewById(R.id.purchaseHistoryButton);
         appInfoTextView = view.findViewById(R.id.appInfoTextView);
         logoutButton = view.findViewById(R.id.logoutButton);
+        greetingTextView = view.findViewById(R.id.greetingTextView);
+        String fullName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        greetingTextView.setText("Hello " + fullName.trim().split("\\s+")[0] + "! 👋");
         setupListeners();
         setAppVersionAndBuild();
         return view;

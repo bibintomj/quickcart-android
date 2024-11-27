@@ -81,9 +81,7 @@ public class OrderListFragment extends Fragment {
         });
 
         ordersRecyclerView.setAdapter(orderAdapter);
-
         setupListeners();
-
         loadOrders();
         return view;
     }

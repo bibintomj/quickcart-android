@@ -9,14 +9,18 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="150dp"
-        android:layout_height="30dp"
+    <TextView
+        android:id="@+id/greetingTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="30dp"
-        android:layout_weight="1"
-        android:src="@drawable/logo_coloured"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Hey User"
+        android:textColor="@color/brandMain"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,18 +28,19 @@
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4">
+        app:layout_constraintTop_toBottomOf="@+id/greetingTextView">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
@@ -55,12 +60,21 @@
                 android:textColor="@color/black"
                 app:cornerRadius="12dp" />
 
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="-30dp"
+                android:alpha="0.2"
+                app:srcCompat="@drawable/chevron_right" />
+
         </LinearLayout>
 
         <View
             android:id="@+id/divider3"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginLeft="32dp"
             android:layout_marginTop="8dp"
             android:background="?android:attr/listDivider" />
 
@@ -68,7 +82,7 @@
             android:id="@+id/appInfoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="App version Developer Info"
             android:textColor="@color/tab_inactive" />
 
