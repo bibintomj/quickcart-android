@@ -143,6 +143,8 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             countTextView.setText(String.valueOf(count));
             countLinearLayout.setVisibility(count == 0 ? View.GONE : View.VISIBLE);
             addButton.setVisibility(count == 0 ? View.VISIBLE : View.GONE);
+            increaseCountButton.setEnabled(count < 5);
+            increaseCountButton.setAlpha((count < 5)? 1 : 0.2f);
         }
 
         private void updateStarBar(double rating) {

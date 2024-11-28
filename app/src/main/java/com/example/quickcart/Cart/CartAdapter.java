@@ -144,9 +144,15 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private void setupListenersForProductCountChange(Product product) {
             decreaseCountButton.setOnClickListener(v -> {
-                int updatedCount = CartService.getInstance().removeFromCart(product);
-                updateViewWithProductCountInCart(product, updatedCount);
-                cartUpdateListener.onCartUpdated();
+                int currentCount = cartService.getProductQuantity(product);
+                if (currentCount == 1) {
+                    // show alert
+                    showAlertWhenRemovingItemFromCart(product);
+                } else {
+                    int updatedCount = CartService.getInstance().removeFromCart(product);
+                    updateViewWithProductCountInCart(product, updatedCount);
+                    cartUpdateListener.onCartUpdated();
+                }
             });
 
             increaseCountButton.setOnClickListener(v -> {
@@ -160,6 +166,25 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             descriptionTextView.setText(count + " x $" + product.getPrice());
             countTextView.setText(String.valueOf(count));
             priceTextView.setText(String.format("$%.2f", product.getPrice() * count));
+            increaseCountButton.setEnabled(count < 5);
+            increaseCountButton.setAlpha((count < 5)? 1 : 0.2f);
+        }
+
+        private void showAlertWhenRemovingItemFromCart(Product product) {
+            new android.app.AlertDialog.Builder(itemView.getContext())
+                    .setTitle("Remove Item")
+                    .setMessage("Are you sure you want to remove this item from the cart?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        // Proceed to remove the item from the cart
+                        int updatedCount = CartService.getInstance().removeFromCart(product);
+                        updateViewWithProductCountInCart(product, updatedCount);
+                        cartUpdateListener.onCartUpdated();
+                    })
+                    .setNegativeButton("No", (dialog, which) -> {
+                        // Do nothing, just dismiss the dialog
+                        dialog.dismiss();
+                    })
+                    .show();
         }
     }
 

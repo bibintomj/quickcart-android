@@ -78,7 +78,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
         public void bind(Order order) {
             titleTextView.setText(formatTimestamp(order.getOrderTimestamp()));
-            subtitleTextView.setText("Order ID\n" + order.getUserId());
+            subtitleTextView.setText("Order ID\n" + order.getOrderId());
             priceTextView.setText(String.format("$%.2f", order.getTotalAmount()));
             countTextView.setText(calculateItemCount(order.getProducts()) + " items");
 
@@ -87,7 +87,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                     ", " + order.getShippingAddress().getStreetName() +
                     ", " + order.getShippingAddress().getCity() +
                     ", " + order.getShippingAddress().getPostalCode();
-            descriptionTextView.setText(address);
+//            descriptionTextView.setText(address);
         }
 
         private int calculateItemCount(List<ProductDetails> products) {

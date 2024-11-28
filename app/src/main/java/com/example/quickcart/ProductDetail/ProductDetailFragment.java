@@ -45,6 +45,7 @@ public class ProductDetailFragment extends Fragment {
 
     private TextView returnTextView;
     private TextView productDescription;
+    private TextView specificationTextView;
 
     private LinearLayout countLinearLayout;
     private Button decreaseCountButton;
@@ -89,12 +90,14 @@ public class ProductDetailFragment extends Fragment {
     private void populateProductData() {
         adapter = new ProductImageAdapter(product.getImages());
         imagePageViewer2.setAdapter(adapter);
+        titleTextView.setText(product.getVendor());
         priceTextView.setText(product.getPriceFormattedString());
         productNameTextView.setText(product.getTitle());;
-        soldByTextView.setText("");
+        soldByTextView.setText("Sold by " + product.getVendor());
         updateStarBar(product.getRating().getRate());
-        returnTextView.setText("");
+        returnTextView.setText(product.getReturnGuarantee());
         productDescription.setText(product.getDescription());
+        specificationTextView.setText(formatItemDetail(product.getItemDetail()));
 
         setupListenersForProductCountChange(product);
         updateViewWithProductCountInCart(cartService.getProductQuantity(product));
@@ -130,6 +133,7 @@ public class ProductDetailFragment extends Fragment {
         starBar = view.findViewById(R.id.starBar);
         returnTextView = view.findViewById(R.id.returnTextView);
         productDescription = view.findViewById(R.id.productDescription);
+        specificationTextView = view.findViewById(R.id.specificationTextView);
         countLinearLayout = view.findViewById(R.id.countLinearLayout);
         decreaseCountButton = view.findViewById(R.id.decreaseCountButton);
         countTextView = view.findViewById(R.id.countTextView);
@@ -173,5 +177,23 @@ public class ProductDetailFragment extends Fragment {
         countTextView.setText(String.valueOf(count));
         countLinearLayout.setVisibility(count == 0 ? View.GONE : View.VISIBLE);
         addButton.setVisibility(count == 0 ? View.VISIBLE : View.GONE);
+        increaseCountButton.setEnabled(count < 5);
+        increaseCountButton.setAlpha((count < 5)? 1 : 0.2f);
     }
+
+    private String formatItemDetail(String itemDetail) {
+        // Split by commas, then trim spaces and format each key-value pair on a new line
+        String[] details = itemDetail.split(", ");
+
+        // StringBuilder to concatenate formatted details
+        StringBuilder formattedDetail = new StringBuilder();
+
+        // Iterate through each detail and add to formattedDetail
+        for (String detail : details) {
+            formattedDetail.append(detail.trim()).append("\n");
+        }
+
+        return formattedDetail.toString();
+    }
+
 }

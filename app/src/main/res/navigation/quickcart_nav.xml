@@ -154,7 +154,7 @@
     </fragment>
     <fragment
         android:id="@+id/orderDetailFragment"
-        android:name="com.example.quickcart.OrderDetailFragment"
+        android:name="com.example.quickcart.OrderDetail.OrderDetailFragment"
         android:label="fragment_order_detail"
         tools:layout="@layout/fragment_order_detail" />
 </navigation>

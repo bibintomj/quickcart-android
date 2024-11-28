@@ -17,6 +17,10 @@ public class Product implements Parcelable {
     private Rating rating; // Nested class for the "rating" field
     private String title;
 
+    private String vendor;
+    private String returnGuarantee;
+    private String itemDetail;
+
     public Product() {}
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -33,6 +37,30 @@ public class Product implements Parcelable {
 
     public int getId() {
         return id;
+    }
+
+    public String getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(String vendor) {
+        this.vendor = vendor;
+    }
+
+    public String getReturnGuarantee() {
+        return returnGuarantee;
+    }
+
+    public void setReturnGuarantee(String returnGuarantee) {
+        this.returnGuarantee = returnGuarantee;
+    }
+
+    public String getItemDetail() {
+        return itemDetail;
+    }
+
+    public void setItemDetail(String itemDetail) {
+        this.itemDetail = itemDetail;
     }
 
     public String getTitle() {
@@ -99,6 +127,9 @@ public class Product implements Parcelable {
         description = in.readString();
         category = in.readString();
         images = in.createStringArrayList();
+        vendor = in.readString();
+        returnGuarantee = in.readString();
+        itemDetail = in.readString();
     }
 
     @Override
@@ -114,6 +145,9 @@ public class Product implements Parcelable {
         parcel.writeString(description);
         parcel.writeString(category);
         parcel.writeStringList(images);
+        parcel.writeString(vendor);
+        parcel.writeString(returnGuarantee);
+        parcel.writeString(itemDetail);
     }
 
     public static class Rating implements Parcelable  {
@@ -175,6 +209,9 @@ public class Product implements Parcelable {
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", images='" + images + '\'' +
+                ", vendor='" + vendor + '\'' +
+                ", returnGuarantee='" + returnGuarantee + '\'' +
+                ", itemDetail='" + itemDetail + '\'' +
                 '}';
     }
 

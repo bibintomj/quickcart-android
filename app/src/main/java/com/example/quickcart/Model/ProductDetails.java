@@ -40,6 +40,8 @@ public class ProductDetails implements Parcelable {
         return price;
     }
 
+    public double getTotalPrice() {  return price * count; }
+
     public void setPrice(double price) {
         this.price = price;
     }

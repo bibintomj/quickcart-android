@@ -54,7 +54,8 @@
                 android:fontFamily="sans-serif"
                 android:text="Address"
                 android:textColor="@color/gray"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <Space

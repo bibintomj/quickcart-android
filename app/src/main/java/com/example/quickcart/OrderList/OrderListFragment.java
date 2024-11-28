@@ -1,14 +1,14 @@
 package com.example.quickcart.OrderList;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -19,16 +19,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.example.quickcart.Cart.CartAdapter;
 import com.example.quickcart.Model.Order;
-import com.example.quickcart.Model.Product;
-import com.example.quickcart.ProductList.ProductsAdapter;
 import com.example.quickcart.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -104,8 +102,18 @@ public class OrderListFragment extends Fragment {
 
     private void loadOrders() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", null);
 
-        db.collection("orders").get()
+        if (userId == null) {
+            return;
+        }
+
+        AtomicBoolean hasOrders = new AtomicBoolean(false);
+
+        db.collection("orders")
+                .whereEqualTo("userId", userId)
+                .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         List<Order> orderList = new ArrayList<>();
@@ -115,9 +123,11 @@ public class OrderListFragment extends Fragment {
                         }
                         // Pass the data to RecyclerView
                         orderAdapter.updateOrders(orderList);
-                        noContentLinearLayout.setVisibility(orderList.isEmpty() ? View.VISIBLE : View.INVISIBLE);
-                        ordersRecyclerView.setVisibility(orderList.isEmpty() ? View.INVISIBLE : View.VISIBLE);
+                        hasOrders.set(!orderList.isEmpty());
                     }
+
+                    noContentLinearLayout.setVisibility(hasOrders.get() ? View.INVISIBLE : View.VISIBLE);
+                    ordersRecyclerView.setVisibility(hasOrders.get() ? View.VISIBLE : View.INVISIBLE);
                 })
                 .addOnFailureListener(e -> {
                     Log.e("Firestore", "Error fetching orders", e);
