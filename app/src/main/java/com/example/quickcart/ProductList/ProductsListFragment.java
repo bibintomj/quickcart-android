@@ -17,12 +17,14 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.quickcart.R;
+import com.example.quickcart.Services.CartService;
 import com.example.quickcart.Services.FirebaseCallback;
 import com.example.quickcart.Model.Product;
 import com.example.quickcart.Services.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -112,8 +114,17 @@ public class ProductsListFragment extends Fragment {
             productService.fetchProductsFromFirestore(new FirebaseCallback() {
                 @Override
                 public void onSuccess(List<Product> products) {
-                    // Use the fetched data
-                    productsAdapter.updateProducts(products);
+                    CartService.getInstance().fetchCartFromFirebase(getContext(), new CartService.FetchCartCallback() {
+                        @Override
+                        public void onCartFetched(Map<Product, Integer> cartItems) {
+                            productsAdapter.updateProducts(products);
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            productsAdapter.updateProducts(products);
+                        }
+                    });
                 }
 
                 @Override
