@@ -8,12 +8,15 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.quickcart.R;
@@ -36,6 +39,7 @@ public class ProductsListFragment extends Fragment {
     private ProductsAdapter productsAdapter;
     private GridLayoutManager layoutManager;
     private List<Product> products = new ArrayList<>();
+    private SearchView searchView;
 
     private ProductService productService;
 
@@ -56,6 +60,13 @@ public class ProductsListFragment extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.navigateToCart);
             }
         });
+
+        searchView = view.findViewById(R.id.productsSearchView);
+
+        // Setting max length for SearchView
+        EditText et = (EditText)searchView.findViewById(searchView.getContext().getResources()
+                .getIdentifier("android:id/search_src_text", null, null));
+        et.setFilters(new InputFilter[] { new InputFilter.LengthFilter(25) });
 
         productService = ProductService.getInstance();
 
@@ -79,6 +90,7 @@ public class ProductsListFragment extends Fragment {
         initializeTabBar(view);
 
         loadProductData();
+        setupSearchListener();
         return view;
     }
 
@@ -134,5 +146,21 @@ public class ProductsListFragment extends Fragment {
                 }
             });
         }
+    }
+
+    private void setupSearchListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                productsAdapter.getFilter().filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                productsAdapter.getFilter().filter(newText);
+                return true;
+            }
+        });
     }
 }

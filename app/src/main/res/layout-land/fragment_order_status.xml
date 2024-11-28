@@ -57,6 +57,16 @@
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.6"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Thank You"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/goHomeButton"

@@ -4,6 +4,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,18 +19,21 @@ import com.example.quickcart.R;
 import com.example.quickcart.Services.CartService;
 import com.example.quickcart.Model.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
     private static final int TYPE_BANNER = 0;
     private static final int TYPE_GRID_ITEM = 1;
 
     private final List<Product> products;
+    private List<Product> filteredProducts;
     private final OnProductClickListener clickListener;
 
     public ProductsAdapter(List<Product> products, OnProductClickListener clickListener) {
         this.products = products;
+        this.filteredProducts = new ArrayList<>(products);
         this.clickListener = clickListener;
     }
 
@@ -56,7 +61,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // Customize banner if needed
         } else {
             ProductCardHolder productCardHolder = (ProductCardHolder) holder;
-            Product product = products.get(position - 1); // Subtract 1 to account for the banner
+            Product product = filteredProducts.get(position - 1); // Subtract 1 to account for the banner
             productCardHolder.bind(product);
             productCardHolder.itemView.setOnClickListener(view -> clickListener.onProductClick(product));
         }
@@ -64,8 +69,40 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return products.size() + 1; // +1 for the banner
+        return filteredProducts.size() + 1; // +1 for the banner
     }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String query = constraint != null ? constraint.toString().trim().toLowerCase() : "";
+                List<Product> result = new ArrayList<>();
+                if (query.isEmpty()) {
+                    result.addAll(products);
+                } else {
+                    for (Product product : products) {
+                        if (product.getTitle().toLowerCase().contains(query)) {
+                            result.add(product);
+                        }
+                    }
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = result;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                filteredProducts.clear();
+                filteredProducts.addAll((List<Product>) results.values);
+                notifyDataSetChanged();
+            }
+        };
+    }
+
 
     static class BannerViewHolder extends RecyclerView.ViewHolder {
         BannerViewHolder(View itemView) {
@@ -164,6 +201,8 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             }
         }
+
+
     }
 
     public interface OnProductClickListener {
@@ -173,6 +212,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void updateProducts(List<Product> newProducts) {
         this.products.clear();
         this.products.addAll(newProducts);
+        this.filteredProducts = new ArrayList<>(this.products);
         notifyDataSetChanged(); // reloading the recylcer view
     }
 }

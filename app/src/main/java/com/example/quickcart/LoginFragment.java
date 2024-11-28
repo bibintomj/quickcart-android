@@ -50,13 +50,7 @@ public class LoginFragment extends Fragment {
         joinButton = view.findViewById(R.id.joinButton);
         mAuth = FirebaseAuth.getInstance();
         setupListeners();
-        setDummyEmailPassword();
         return view;
-    }
-
-    private void setDummyEmailPassword() {
-        emailEditText.setText("steve123@gmail.com");
-        passwordEditText.setText("Pass@123");
     }
 
     private void setupListeners() {
