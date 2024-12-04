@@ -109,7 +109,7 @@ public class LoginFragment extends Fragment {
                         } else {
                             // login failed. showing message.
                             Log.w("Login", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(),  task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

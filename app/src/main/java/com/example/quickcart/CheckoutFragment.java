@@ -23,6 +23,8 @@ import com.example.quickcart.Model.PaymentDetails;
 import com.example.quickcart.Model.ShippingAddress;
 import com.example.quickcart.Services.CartService;
 import com.example.quickcart.Services.OrderService;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 import java.util.Calendar;
 
@@ -114,10 +116,17 @@ public class CheckoutFragment extends Fragment {
         }
 
         // checking if number is empty as well as it matches phone pattern
-        if (TextUtils.isEmpty(phoneEditText.getText()) || !Patterns.PHONE.matcher(phoneEditText.getText()).matches()) {
-            phoneEditText.setError("Invalid phone number");
-            isValid = false;
+        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+        try {
+            PhoneNumber number = phoneUtil.parse(phoneEditText.getText().toString().trim(), "CA");
+            if (TextUtils.isEmpty(phoneEditText.getText()) || !phoneUtil.isValidNumber(number)) {
+                phoneEditText.setError("Invalid phone number");
+                isValid = false;
+            }
+        } catch (Exception e) {
+            phoneEditText.setError(e.getLocalizedMessage());
         }
+
 
         // checking if empty
         if (TextUtils.isEmpty(houseNumberEditText.getText())) {

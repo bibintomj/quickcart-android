@@ -82,6 +82,8 @@ public class JoinFragment extends Fragment {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Log.d("QC", "User profile updated.");
+                                            } else {
+                                                Toast.makeText(getContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                             if (getView() != null) {
                                                 // go to login after signup success
@@ -90,7 +92,7 @@ public class JoinFragment extends Fragment {
                                         }
                                     });
                         } else {
-                            Toast.makeText(getContext(), "Registration Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

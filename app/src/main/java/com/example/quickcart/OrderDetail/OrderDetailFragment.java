@@ -102,7 +102,8 @@ public class OrderDetailFragment extends Fragment {
         String address = order.getShippingAddress().getHouseNumber() +
                 ", " + order.getShippingAddress().getStreetName() +
                 "\n" + order.getShippingAddress().getCity() +
-                ", " + order.getShippingAddress().getPostalCode();
+                ", " + order.getShippingAddress().getProvince() +
+                ", " + order.getShippingAddress().getPostalCode().toUpperCase();
 
         addressTextView.setText(address);
         orderDetailAdapter.updateOrders(order.getProducts());
