@@ -1,6 +1,8 @@
 
 # QuickCart
 
+![QuickCart](app/src/main/res/drawable/logo_coloured.png)
+
 QuickCart is an e-commerce Android application developed using **Android Studio Lady Bird**, **Java**, and **Firebase**. The app provides a seamless shopping experience, enabling users to browse through a wide range of products, add items to their cart, and place orders with ease.
 
 ---
