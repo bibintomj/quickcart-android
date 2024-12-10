@@ -113,6 +113,9 @@ public class CheckoutFragment extends Fragment {
         if (TextUtils.isEmpty(fullNameEditText.getText())) {
             fullNameEditText.setError("Full name is required");
             isValid = false;
+        } else if (!fullNameEditText.getText().toString().matches("^[a-zA-Z\\s]+$")) {
+            fullNameEditText.setError("Full name cannot contain special characters or numbers");
+            isValid = false;
         }
 
         // checking if number is empty as well as it matches phone pattern
@@ -127,22 +130,30 @@ public class CheckoutFragment extends Fragment {
             phoneEditText.setError(e.getLocalizedMessage());
         }
 
-
-        // checking if empty
+        // Checking if house number is empty and contains no special characters
         if (TextUtils.isEmpty(houseNumberEditText.getText())) {
             houseNumberEditText.setError("House number is required");
             isValid = false;
+        } else if (!houseNumberEditText.getText().toString().matches("^[a-zA-Z0-9\\s]+$")) {
+            houseNumberEditText.setError("House number cannot contain special characters");
+            isValid = false;
         }
 
-        // checking if empty
+        // Checking if street name is empty and contains no special characters
         if (TextUtils.isEmpty(streetNameEditText.getText())) {
             streetNameEditText.setError("Street name is required");
+            isValid = false;
+        } else if (!streetNameEditText.getText().toString().matches("^[a-zA-Z0-9\\s]+$")) {
+            streetNameEditText.setError("Street name cannot contain special characters");
             isValid = false;
         }
 
         // checking if empty
         if (TextUtils.isEmpty(cityEditText.getText())) {
             cityEditText.setError("City is required");
+            isValid = false;
+        } else if (!cityEditText.getText().toString().matches("^[a-zA-Z0-9\\s]+$")) {
+            cityEditText.setError("City cannot contain special characters");
             isValid = false;
         }
 
@@ -160,6 +171,9 @@ public class CheckoutFragment extends Fragment {
 
         if (TextUtils.isEmpty(nameOnCardEditText.getText())) {
             nameOnCardEditText.setError("Name on card is required");
+            isValid = false;
+        } else if (!nameOnCardEditText.getText().toString().matches("^[a-zA-Z\\s]+$")) {
+            nameOnCardEditText.setError("Name on card cannot contain special characters or numbers");
             isValid = false;
         }
 
