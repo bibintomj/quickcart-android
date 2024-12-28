@@ -68,7 +68,7 @@ public class LoginFragment extends Fragment {
                 String password = String.valueOf(passwordEditText.getText()).trim();
 
                 // validate before logging in
-                if (validateEmail(email)) {
+                if (validateEmail(email) && validatePassword(password)) {
                     // If validation passes, perform login
                     performLogin(email, password, view);
                 }
@@ -84,6 +84,14 @@ public class LoginFragment extends Fragment {
         // regex check
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailEditText.setError("Invalid email format");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validatePassword(String password) {
+        if (password.isEmpty()) {
+            passwordEditText.setError("Password is required");
             return false;
         }
         return true;
