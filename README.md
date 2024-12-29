@@ -39,6 +39,8 @@ QuickCart is an e-commerce Android application developed using **Android Studio 
 4. Set up Firebase:
    - Add your Firebase project credentials (`google-services.json`) to the app's `app` directory.
    - Configure Authentication and Firestore/Realtime Database in your Firebase console.
+   - Insert products to your firestore using package https://www.npmjs.com/package/node-firestore-import-export and firestore-collections.json
+   - firestore-collections.json is added in the project root directory. 
 
 5. Build and run the app on an emulator or a physical device.
 
