@@ -48,7 +48,14 @@ public class MoreFragment extends Fragment {
         appInfoTextView = view.findViewById(R.id.appInfoTextView);
         logoutButton = view.findViewById(R.id.logoutButton);
         greetingTextView = view.findViewById(R.id.greetingTextView);
-        String fullName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        String fullName = null;
+        try {
+            fullName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        } catch (Exception e) {
+            e.printStackTrace();  // Optionally log the exception or handle it in another way
+            // You can also set fullName to a default value if desired
+            fullName = "Unknown";
+        }
         greetingTextView.setText("Hello " + fullName.trim().split("\\s+")[0] + "! 👋");
         setupListeners();
         setAppVersionAndBuild();

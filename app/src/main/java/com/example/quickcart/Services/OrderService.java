@@ -52,6 +52,8 @@ public class OrderService {
                                 System.currentTimeMillis());
 
         // writing to firestore (placing order)
+
+        // This will crash if your firestore is not properly setup
         db.collection("orders")
                 .add(order)
                 .addOnSuccessListener(documentReference -> {

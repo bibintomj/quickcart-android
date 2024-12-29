@@ -33,6 +33,7 @@ android {
 }
 
 dependencies {
+    implementation ("com.google.code.gson:gson:2.8.9")
     implementation ("com.googlecode.libphonenumber:libphonenumber:8.13.20")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")

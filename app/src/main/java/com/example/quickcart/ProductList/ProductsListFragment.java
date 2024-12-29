@@ -123,7 +123,7 @@ public class ProductsListFragment extends Fragment {
             productsAdapter.updateProducts(productService.getCachedProducts());
         } else {
             // Fetch from Firestore
-            productService.fetchProductsFromFirestore(new FirebaseCallback() {
+            productService.loadProducts(new FirebaseCallback() {
                 @Override
                 public void onSuccess(List<Product> products) {
                     CartService.getInstance().fetchCartFromFirebase(getContext(), new CartService.FetchCartCallback() {
@@ -144,7 +144,7 @@ public class ProductsListFragment extends Fragment {
                     // Handle failure (e.g., show a toast or an error message)
                     Toast.makeText(getContext(), "Failed to fetch products", Toast.LENGTH_SHORT).show();
                 }
-            });
+            }, getContext());
         }
     }
 

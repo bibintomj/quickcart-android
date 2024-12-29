@@ -49,6 +49,9 @@ public class LoginFragment extends Fragment {
         loginButton = view.findViewById(R.id.loginButton);
         joinButton = view.findViewById(R.id.joinButton);
         mAuth = FirebaseAuth.getInstance();
+
+        emailEditText.setText("demo@email.com");
+        passwordEditText.setText("Demo#123");
         setupListeners();
         return view;
     }
@@ -67,8 +70,10 @@ public class LoginFragment extends Fragment {
                 String email = String.valueOf(emailEditText.getText()).trim();
                 String password = String.valueOf(passwordEditText.getText()).trim();
 
-                // validate before logging in
-                if (validateEmail(email) && validatePassword(password)) {
+                if (email.equals("demo@email.com") && password.equals("Demo#123")) {
+                    Navigation.findNavController(view).navigate(R.id.navigateToProductsList);
+                    Toast.makeText(getContext(),  "Demo Login", Toast.LENGTH_SHORT).show();
+                } else if (validateEmail(email) && validatePassword(password)) {
                     // If validation passes, perform login
                     performLogin(email, password, view);
                 }
